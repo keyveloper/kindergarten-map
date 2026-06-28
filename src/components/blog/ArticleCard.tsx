@@ -9,6 +9,7 @@ interface ArticleCardProps {
 export function ArticleCard({ post, featured = false }: ArticleCardProps) {
   return (
     <article className={`article-card ${featured ? 'article-card-featured' : ''}`}>
+      {featured ? <p className="eyebrow">추천 글</p> : null}
       <div className="article-meta">
         <span>{post.category}</span>
         <span>{post.readingMinutes}분 읽기</span>

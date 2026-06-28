@@ -7,15 +7,17 @@ export default function HomePage() {
     <main>
       <Container className="hero-grid">
         <section className="hero-copy" aria-labelledby="home-title">
-          <p className="eyebrow">엄마의 유치원 선택 노트</p>
-          <h1 id="home-title">우리 동네 유치원 선택을 더 다정하게 정리하는 블로그</h1>
+          <p className="eyebrow">유치원 알아보기</p>
+          <h1 id="home-title">우리 아이 유치원, 무엇부터 봐야 할까요?</h1>
           <p>
-            상담 전 체크리스트, 통학 동선, 방과후 과정처럼 엄마들이 실제로 궁금해하는
-            정보를 먼저 쌓고, 이후에는 지역별 유치원 맵과 비교 도구로 확장합니다.
+            처음 유치원을 알아볼 때 헷갈리는 내용을 쉽게 정리합니다. 상담 때 무엇을
+            물어볼지, 집에서 얼마나 가까워야 하는지, 비용과 방과후 과정은 어디까지
+            확인해야 하는지 하나씩 알려드립니다.
           </p>
           <div className="hero-note" aria-label="콘텐츠 방향">
-            <span>상담 전 질문</span>
+            <span>상담 질문</span>
             <span>통학 거리</span>
+            <span>비용과 일정</span>
             <span>아이 성향</span>
           </div>
           <div className="hero-actions">
@@ -37,37 +39,36 @@ export default function HomePage() {
       <Container className="care-strip" aria-label="사이트 콘텐츠 핵심 가치">
         <div>
           <span className="care-index">01</span>
-          <strong>엄마 눈높이</strong>
-          <p>광고 문구보다 실제 상담에서 확인할 질문을 먼저 정리합니다.</p>
+          <strong>상담 때 물어볼 것</strong>
+          <p>선생님, 학급 인원, 안전, 급식처럼 상담 자리에서 확인할 질문을 모았습니다.</p>
         </div>
         <div>
           <span className="care-index">02</span>
-          <strong>동네 기준</strong>
-          <p>지도와 생활권을 함께 보며 매일의 등하원 부담을 줄입니다.</p>
+          <strong>매일 다니기 괜찮은지</strong>
+          <p>집에서의 거리, 차량 이용 시간, 도보 안전, 하원 시간을 함께 살펴봅니다.</p>
         </div>
         <div>
           <span className="care-index">03</span>
-          <strong>아이 중심</strong>
-          <p>프로그램 수보다 아이의 적응과 하루 리듬을 기준으로 봅니다.</p>
+          <strong>아이에게 맞는 곳인지</strong>
+          <p>활동이 많은 아이, 낯가림이 있는 아이처럼 성향에 맞는 환경을 봅니다.</p>
         </div>
       </Container>
 
       <Container className="landing-info">
-        <p className="eyebrow">Information</p>
-        <h2>유치원 선택이 막막한 부모를 위한 기준 정리</h2>
+        <p className="eyebrow">읽을거리</p>
+        <h2>유치원 고르기 전에 많이 묻는 질문부터 다룹니다</h2>
         <p>
-          유치원 상담에서 무엇을 물어봐야 하는지, 통학 동선은 어떻게 봐야 하는지,
-          아이 성향에 맞는 환경은 무엇인지 차분하게 정리합니다. 광고성 소개보다
-          부모가 직접 비교하고 판단할 수 있는 기준을 남기는 것이 목표입니다.
+          “좋다는 유치원이 우리 아이에게도 맞을까?”, “집에서 조금 멀어도 괜찮을까?”,
+          “상담에 가면 뭘 물어봐야 할까?” 같은 질문을 글로 풀어갑니다.
         </p>
       </Container>
 
       <Container className="landing-cta">
-        <p className="eyebrow">Blog</p>
-        <h2>실제로 써먹을 수 있는 글부터 읽어보세요</h2>
+        <p className="eyebrow">블로그</p>
+        <h2>지금은 유치원 선택 글을 먼저 모으고 있습니다</h2>
         <p>
-          입학 준비, 상담 체크리스트, 통학 거리, 방과후 과정처럼 바로 확인할 수 있는
-          주제부터 하나씩 쌓고 있습니다.
+          상담 체크리스트, 통학 거리, 국공립과 사립의 차이, 아이 성향별 유치원 고르는
+          법부터 읽어볼 수 있습니다.
         </p>
         <Button href="/blog">블로그 글 보기</Button>
       </Container>
