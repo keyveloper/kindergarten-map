@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="site-footer">
       <Container className="footer-grid">
         <div>
-          <Link href="/" className="brand footer-brand" aria-label="유치원맵 노트 홈">
+          <Link href="/" className="brand footer-brand" aria-label="우리동네 유치원 홈">
             <BrandMark />
             <span>{siteConfig.name}</span>
           </Link>

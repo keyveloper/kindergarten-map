@@ -3,7 +3,7 @@ import { Container } from '@/components/ui/Container';
 
 export const metadata: Metadata = {
   title: '소개',
-  description: '유치원맵 노트가 제공하는 정보의 범위와 콘텐츠 작성 기준을 안내합니다.',
+  description: '우리동네 유치원가 제공하는 정보의 범위와 콘텐츠 작성 기준을 안내합니다.',
 };
 
 export default function AboutPage() {
@@ -11,9 +11,9 @@ export default function AboutPage() {
     <main>
       <Container className="static-page">
         <p className="eyebrow">About</p>
-        <h1>유치원맵 노트 소개</h1>
+        <h1>우리동네 유치원 소개</h1>
         <p>
-          유치원맵 노트는 유치원 선택과 입학 준비에 필요한 정보를 정리하는 블로그입니다.
+          우리동네 유치원는 유치원 선택과 입학 준비에 필요한 정보를 정리하는 블로그입니다.
           상담에서 무엇을 확인해야 하는지, 통학 거리는 어떻게 판단해야 하는지, 아이
           성향에 따라 어떤 환경을 살펴봐야 하는지 같은 주제를 다룹니다.
         </p>
