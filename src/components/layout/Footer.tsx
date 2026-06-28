@@ -1,9 +1,15 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { Container } from '@/components/ui/Container';
 import { siteConfig } from '@/lib/site';
 
 export function Footer() {
+  const pathname = usePathname();
+  // 지도는 전체 화면 앱처럼 동작하므로 푸터를 숨겨 외부 스크롤을 없앤다
+  if (pathname === '/map') return null;
   return (
     <footer className="site-footer">
       <Container className="footer-grid">

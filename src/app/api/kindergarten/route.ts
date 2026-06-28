@@ -55,7 +55,19 @@ export async function GET(request: NextRequest) {
   const afterSchoolMap = new Map(afterSchoolList.map((a) => [a.kindercode, a]));
 
   const merged = basicList
-    .filter((k) => k.lttdcdnt && k.lngtcdnt) // must have coordinates
+    .filter((k) => {
+      const lat = Number(k.lttdcdnt);
+      const lng = Number(k.lngtcdnt);
+      // 한국 영역 내 유효 좌표만 (NaN / 0,0 / 범위밖 제거)
+      return (
+        Number.isFinite(lat) &&
+        Number.isFinite(lng) &&
+        lat > 33 &&
+        lat < 39 &&
+        lng > 124 &&
+        lng < 132
+      );
+    })
     .map((basic) => {
       const code = basic.kindercode;
       const bus = busMap.get(code) || {};
