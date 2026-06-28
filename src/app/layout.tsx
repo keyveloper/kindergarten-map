@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: siteConfig.name,
   description: siteConfig.description,
+  icons: {
+    icon: '/favicon.png',
+    apple: '/apple-touch-icon.png',
+  },
   verification: {
     google: 'iF1WE4Iq7OivIIHk0PZ5_klWCTX3vRBJc4iVOuLGxj8',
   },
