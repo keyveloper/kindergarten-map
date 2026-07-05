@@ -26,6 +26,7 @@ export function Footer() {
           <Link href="/">홈</Link>
           <Link href="/blog">블로그</Link>
           <Link href="/about">소개</Link>
+          <Link href="/privacy">개인정보처리방침</Link>
           <Link href="/terms">이용약관</Link>
         </nav>
       </Container>

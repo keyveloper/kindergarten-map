@@ -43,6 +43,31 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      description: siteConfig.description,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteConfig.url}/images/brand-mark.png`,
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      inLanguage: 'ko-KR',
+      publisher: {
+        '@id': `${siteConfig.url}/#organization`,
+      },
+    },
+  ];
+
   return (
     <html lang="ko">
       <head>
@@ -50,6 +75,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9574364275702073"
           crossOrigin="anonymous"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body>
