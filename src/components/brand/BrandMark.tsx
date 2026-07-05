@@ -7,23 +7,21 @@ export function BrandMark() {
         role="img"
         focusable="false"
       >
-        <path className="hat-shadow" d="M13 42c8 8 30 8 38 0 0 9-8 16-19 16S13 51 13 42Z" />
+        <path d="M32 9 L32 2.5" fill="none" stroke="#1f1a17" strokeWidth="3" strokeLinecap="round" />
+        <path d="M32 6.5 C27.5 1.5 20.5 2.5 21.5 7.5 C24.5 9.8 30 9.6 32 6.5 Z" fill="#1f1a17" />
+        <path d="M32 6.5 C36.5 1.5 43.5 2.5 42.5 7.5 C39.5 9.8 34 9.6 32 6.5 Z" fill="#1f1a17" />
         <path
-          className="hat-crown"
-          d="M12 30c1-12 10-21 20-21s19 9 20 21v9H12v-9Z"
+          d="M32 9 C19 9 10 18 10 29 C10 42 23 51 32 59 C41 51 54 42 54 29 C54 18 45 9 32 9 Z"
+          fill="#f7c948"
+          stroke="#1f1a17"
+          strokeWidth="3.4"
+          strokeLinejoin="round"
         />
-        <path
-          className="hat-brim"
-          d="M8 37c7 7 41 7 48 0 2-2 4 8-3 12-9 6-33 6-42 0-7-4-5-14-3-12Z"
-        />
-        <path className="hat-band" d="M16 29c8 4 24 4 32 0v8c-8 4-24 4-32 0v-8Z" />
-        <path className="hat-puff" d="M25 8c0-4 14-4 14 0 0 5-14 5-14 0Z" />
-        <path className="hat-cheek-left" d="M17 44c3-2 8-2 10 0-1 3-8 3-10 0Z" />
-        <path className="hat-cheek-right" d="M37 44c2-2 7-2 10 0-2 3-9 3-10 0Z" />
-        <path className="hat-eye-left" d="M24 39c0 2-1 3-3 3s-3-1-3-3 1-3 3-3 3 1 3 3Z" />
-        <path className="hat-eye-right" d="M46 39c0 2-1 3-3 3s-3-1-3-3 1-3 3-3 3 1 3 3Z" />
-        <path className="hat-smile" d="M29 42c2 2 4 2 6 0" />
-        <path className="hat-sparkle" d="M50 15l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z" />
+        <ellipse cx="20" cy="36" rx="3.4" ry="2.3" fill="#f2939f" />
+        <ellipse cx="44" cy="36" rx="3.4" ry="2.3" fill="#f2939f" />
+        <circle cx="25.5" cy="31" r="2.7" fill="#1f1a17" />
+        <circle cx="38.5" cy="31" r="2.7" fill="#1f1a17" />
+        <circle cx="32" cy="35.4" r="1.5" fill="#1f1a17" />
       </svg>
     </span>
   );

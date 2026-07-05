@@ -149,68 +149,6 @@ img {
   height: 32px;
 }
 
-.hat-shadow,
-.hat-crown,
-.hat-brim,
-.hat-band,
-.hat-puff,
-.hat-cheek-left,
-.hat-cheek-right,
-.hat-eye-left,
-.hat-eye-right,
-.hat-smile,
-.hat-sparkle {
-  vector-effect: non-scaling-stroke;
-}
-
-.hat-shadow {
-  fill: rgba(27, 28, 31, 0.1);
-}
-
-.hat-crown {
-  fill: var(--color-primary);
-  stroke: var(--color-ink);
-  stroke-width: 3;
-  stroke-linejoin: round;
-}
-
-.hat-brim {
-  fill: white;
-  stroke: var(--color-ink);
-  stroke-width: 3;
-  stroke-linejoin: round;
-}
-
-.hat-band {
-  fill: var(--color-secondary);
-}
-
-.hat-puff,
-.hat-sparkle {
-  fill: white;
-  stroke: var(--color-ink);
-  stroke-width: 2.6;
-  stroke-linejoin: round;
-}
-
-.hat-cheek-left,
-.hat-cheek-right {
-  fill: rgba(246, 201, 69, 0.55);
-  stroke: none;
-}
-
-.hat-eye-left,
-.hat-eye-right {
-  fill: var(--color-ink);
-}
-
-.hat-smile {
-  fill: none;
-  stroke: var(--color-ink);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-
 .primary-nav,
 .site-footer nav {
   display: flex;
