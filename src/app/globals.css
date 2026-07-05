@@ -400,8 +400,13 @@ h3 {
 
 /* Home body: one left-aligned column, editorial rhythm */
 .home-body {
-  max-width: 760px;
   padding-bottom: 16px;
+}
+
+.home-list-block,
+.home-trust,
+.home-blog {
+  max-width: 760px;
 }
 
 .home-list-block {
