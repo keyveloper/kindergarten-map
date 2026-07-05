@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
-import { BlogContentBlock, blogPosts } from '@/data/posts';
+import { BlogContentBlock, publishedPosts as blogPosts } from '@/data/posts';
 import { siteConfig } from '@/lib/site';
 
 interface BlogPostPageProps {
@@ -191,6 +191,15 @@ function renderContentBlock(block: BlogContentBlock, index: number) {
           {block.body.map((item) => (
             <p key={item}>{item}</p>
           ))}
+        </aside>
+      );
+    case 'cta':
+      return (
+        <aside className="post-cta" key={key}>
+          <p>{block.text}</p>
+          <Link href={block.href} className="button button-primary">
+            {block.label}
+          </Link>
         </aside>
       );
     case 'image':

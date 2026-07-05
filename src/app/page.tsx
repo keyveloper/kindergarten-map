@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 
 export const metadata: Metadata = {
-  title: '유치원 선택과 입학 준비, 무엇부터 볼까',
-  description: '처음 유치원을 알아보는 부모를 위한 안내입니다. 상담 때 물어볼 질문, 집에서의 통학 거리와 하원 시간, 비용과 방과후 일정, 아이 성향에 맞는 환경까지 하나씩 정리해 알려드립니다.',
+  title: '우리 동네 유치원 지도 - 주변 유치원 찾고 나란히 비교',
+  description:
+    '동네 이름이나 주소로 주변 유치원을 거리순으로 찾고, 교사 1인당 원아 수·연령별 잔여석·급식·통학차량·방과후 과정을 나란히 비교하세요. 교육부 유치원알리미 공식 데이터로 만든 무료 지도 서비스입니다.',
   alternates: {
     canonical: '/',
   },
@@ -13,73 +13,121 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="home">
       <Container className="hero-grid">
         <section className="hero-copy" aria-labelledby="home-title">
-          <p className="eyebrow">유치원 알아보기</p>
-          <h1 id="home-title">우리 아이 유치원, 무엇부터 봐야 할까요?</h1>
+          <h1 id="home-title">
+            우리 동네 유치원,
+            <br />
+            지도에서 찾고 나란히 비교하세요
+          </h1>
           <p>
-            처음 유치원을 알아볼 때 헷갈리는 내용을 쉽게 정리합니다. 상담 때 무엇을
-            물어볼지, 집에서 얼마나 가까워야 하는지, 비용과 방과후 과정은 어디까지
-            확인해야 하는지 하나씩 알려드립니다.
+            동네 이름이나 주소를 검색하면 주변 유치원을 거리순으로 보여드립니다. 교사
+            1인당 원아 수, 연령별 빈자리, 급식과 통학차량, 방과후 과정을 한 화면에
+            놓고 비교해 우리 아이에게 맞는 곳을 고르세요.
           </p>
-          <div className="hero-note" aria-label="콘텐츠 방향">
-            <span>상담 질문</span>
-            <span>통학 거리</span>
-            <span>비용과 일정</span>
-            <span>아이 성향</span>
-          </div>
           <div className="hero-actions">
-            <Button href="/blog">블로그 글 보기</Button>
+            <Button href="/map">지도에서 유치원 찾기</Button>
+            <Button href="/blog" variant="secondary">
+              유치원 고르기 가이드
+            </Button>
           </div>
+          <p className="hero-trust">
+            교육부 유치원알리미 공식 데이터로 만들었고, 이용료는 없습니다.
+          </p>
         </section>
-        <div className="hero-media">
-          <Image
-            src="/images/kindergarten-map-hero.png"
-            alt="태블릿에서 동네 유치원 지도를 확인하는 부모의 일러스트"
-            width={1200}
-            height={800}
-            priority
-            sizes="(max-width: 768px) 100vw, 46vw"
-          />
+
+        <div className="hero-preview" role="img" aria-label="지도 목록 화면 예시: 검색한 동네 주변 유치원이 거리순으로 나오고, 유치원마다 교사 대 원아 수와 연령별 잔여석, 통학차량 여부가 표시됩니다.">
+          <div className="hp-bar" aria-hidden="true">
+            <span className="hp-search">역삼동</span>
+            <span className="hp-search-go">검색</span>
+          </div>
+          <ul className="hp-list" aria-hidden="true">
+            <li>
+              <div className="hp-top">
+                <span className="hp-name">햇살유치원</span>
+                <span className="hp-dist">320m</span>
+              </div>
+              <div className="hp-tags">
+                <span>교사 1 : 11</span>
+                <span>만 4세 잔여 2</span>
+                <span>통학차량</span>
+              </div>
+            </li>
+            <li>
+              <div className="hp-top">
+                <span className="hp-name">가온누리유치원</span>
+                <span className="hp-dist">540m</span>
+              </div>
+              <div className="hp-tags">
+                <span>교사 1 : 14</span>
+                <span>만 4세 잔여 0</span>
+                <span>방과후</span>
+              </div>
+            </li>
+            <li>
+              <div className="hp-top">
+                <span className="hp-name">푸른숲유치원</span>
+                <span className="hp-dist">760m</span>
+              </div>
+              <div className="hp-tags">
+                <span>교사 1 : 9</span>
+                <span>만 4세 잔여 3</span>
+                <span>급식 직영</span>
+              </div>
+            </li>
+          </ul>
         </div>
       </Container>
 
-      <Container className="care-strip" aria-label="사이트 콘텐츠 핵심 가치">
-        <div>
-          <span className="care-index">01</span>
-          <strong>상담 때 물어볼 것</strong>
-          <p>선생님, 학급 인원, 안전, 급식처럼 상담 자리에서 확인할 질문을 모았습니다.</p>
-        </div>
-        <div>
-          <span className="care-index">02</span>
-          <strong>매일 다니기 괜찮은지</strong>
-          <p>집에서의 거리, 차량 이용 시간, 도보 안전, 하원 시간을 함께 살펴봅니다.</p>
-        </div>
-        <div>
-          <span className="care-index">03</span>
-          <strong>아이에게 맞는 곳인지</strong>
-          <p>활동이 많은 아이, 낯가림이 있는 아이처럼 성향에 맞는 환경을 봅니다.</p>
-        </div>
-      </Container>
+      <Container className="home-body">
+        <section className="home-list-block" aria-labelledby="how-title">
+          <h2 id="how-title">지도에서 이렇게 비교합니다</h2>
+          <dl className="home-list">
+            <div className="home-list-item">
+              <dt>거리순으로 정렬</dt>
+              <dd>
+                내 위치를 누르거나 동네·주소·건물명을 검색하면 가까운 유치원부터
+                차례로 보여드립니다.
+              </dd>
+            </div>
+            <div className="home-list-item">
+              <dt>같은 기준으로 나란히</dt>
+              <dd>
+                마음에 드는 곳을 담아 교사 1인당 원아 수, 급식 운영, 통학차량,
+                방과후 과정을 한 화면에서 비교합니다.
+              </dd>
+            </div>
+            <div className="home-list-item">
+              <dt>우리 아이 나이에 맞춰</dt>
+              <dd>
+                아이 나이로 결과를 걸러 그 연령의 반과 남은 자리를 확인하고 맞는
+                곳을 고릅니다.
+              </dd>
+            </div>
+          </dl>
+        </section>
 
-      <Container className="landing-info">
-        <p className="eyebrow">읽을거리</p>
-        <h2>유치원 고르기 전에 많이 묻는 질문부터 다룹니다</h2>
-        <p>
-          “좋다는 유치원이 우리 아이에게도 맞을까?”, “집에서 조금 멀어도 괜찮을까?”,
-          “상담에 가면 뭘 물어봐야 할까?” 같은 질문을 글로 풀어갑니다.
-        </p>
-      </Container>
+        <section className="home-trust" aria-labelledby="trust-title">
+          <h2 id="trust-title">홍보 없이, 공식 데이터로만</h2>
+          <p>
+            모든 유치원을 교육부 유치원알리미 공식 데이터로 같은 기준에 놓고
+            보여드립니다. 특정 기관을 위에 올리거나 광고로 끼워 넣지 않습니다. 지금은
+            서울 전체 구와 6대 광역시, 세종, 경기, 제주 등 일부 지역을 지원하며 대상
+            지역을 넓혀가고 있습니다.
+          </p>
+        </section>
 
-      <Container className="landing-cta">
-        <p className="eyebrow">블로그</p>
-        <h2>지금은 유치원 선택 글을 먼저 모으고 있습니다</h2>
-        <p>
-          상담 체크리스트, 통학 거리, 국공립과 사립의 차이, 아이 성향별 유치원 고르는
-          법부터 읽어볼 수 있습니다.
-        </p>
-        <Button href="/blog">블로그 글 보기</Button>
+        <section className="home-blog" aria-labelledby="blog-title">
+          <h2 id="blog-title">유치원 고르기 전에 읽어두면 좋은 글</h2>
+          <p>
+            상담에서 물어볼 것, 국공립과 사립의 차이, 통학 거리를 판단하는 법, 아이
+            성향별로 보는 기준을 정리했습니다.
+          </p>
+          <Button href="/blog" variant="secondary">
+            블로그 글 보기
+          </Button>
+        </section>
       </Container>
     </main>
   );

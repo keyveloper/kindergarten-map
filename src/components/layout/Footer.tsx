@@ -19,7 +19,7 @@ export function Footer() {
             <span>{siteConfig.name}</span>
           </Link>
           <p>
-            유치원 선택과 입학 준비를 차분하게 정리하는 한국어 정보 블로그입니다.
+            동네 유치원을 지도에서 찾아 나란히 비교하고, 우리 아이에게 맞는 곳을 고르도록 돕습니다.
           </p>
         </div>
         <nav aria-label="하단 메뉴">

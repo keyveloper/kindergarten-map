@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { ArticleCard } from '@/components/blog/ArticleCard';
 import { Container } from '@/components/ui/Container';
-import { blogPosts } from '@/data/posts';
+import { publishedPosts as blogPosts } from '@/data/posts';
 import { siteConfig } from '@/lib/site';
 
 export const metadata: Metadata = {
