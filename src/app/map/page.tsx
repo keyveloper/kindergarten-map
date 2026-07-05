@@ -445,9 +445,10 @@ export default function MapPage() {
     });
 
     if (home) bounds.extend(new kakao.maps.LatLng(home.lat, home.lng));
-    // 여백을 넉넉히 줘 마커가 가장자리·오버레이(상단 요약/하단 범례)에 붙지 않게 한다
-    map.setBounds(bounds, 96, 72, 112, 72);
-    // 마커가 몰려 있을 때 과도하게 확대돼 답답해 보이는 것을 방지 (숫자 클수록 축소)
+    // 여백을 줘 마커가 가장자리·오버레이(상단 요약/하단 범례)에 붙지 않게 한다.
+    // 넓게 퍼진 지역은 한 단계 축소돼 숨통이 트이고, 좁은 지역은 과도 확대되지 않는다.
+    map.setBounds(bounds, 72, 56, 88, 56);
+    // 마커가 극단적으로 몰려 있을 때(1~2곳) 과확대로 길을 잃지 않게 하한
     if (map.getLevel() < 4) map.setLevel(4);
     applyHighlight();
     // eslint-disable-next-line react-hooks/exhaustive-deps
