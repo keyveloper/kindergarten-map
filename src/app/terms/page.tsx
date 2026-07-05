@@ -4,6 +4,9 @@ import { Container } from '@/components/ui/Container';
 export const metadata: Metadata = {
   title: '이용약관',
   description: '우리동네 유치원 웹사이트 이용 조건, 콘텐츠 이용 범위, 정보의 한계를 안내합니다.',
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 export default function TermsPage() {
@@ -23,7 +26,7 @@ export default function TermsPage() {
         <section>
           <h2>서비스의 범위</h2>
           <p>
-            우리동네 유치원는 유치원 선택, 입학 준비, 상담 질문, 통학 동선, 아이 성향에 관한
+            우리동네 유치원은 유치원 선택, 입학 준비, 상담 질문, 통학 동선, 아이 성향에 관한
             정보성 콘텐츠를 제공합니다. 사이트에 게시된 글은 부모가 비교 기준을 세우는 데
             참고할 수 있도록 작성되며, 특정 유치원의 입학 가능 여부나 운영 조건을 보장하지
             않습니다.

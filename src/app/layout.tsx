@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
@@ -7,7 +7,10 @@ import { siteConfig } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: siteConfig.name,
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
   description: siteConfig.description,
   icons: {
     icon: '/favicon.png',
@@ -19,15 +22,36 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: 'website',
     locale: 'ko_KR',
     images: ['/images/kindergarten-map-hero.png'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ['/images/kindergarten-map-hero.png'],
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9574364275702073"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <Header />
         <ScrollProgress />

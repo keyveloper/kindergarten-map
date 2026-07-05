@@ -6,6 +6,9 @@ import { Container } from '@/components/ui/Container';
 export const metadata: Metadata = {
   title: '우리동네 유치원 | 유치원 알리미 - 2025년어린이집 가장 최신정보',
   description: '처음 유치원을 알아볼 때 헷갈리는 내용을 쉽게 정리합니다. 상담 때 무엇을 물어볼지, 집에서 얼마나 가까워야 하는지, 비용과 방과후 과정은 어디까지 확인해야 하는지 하나씩 알려드립니다. 선생님, 학급 인원, 안전, 급식처럼 상담 자리에서 확인할 질문을 모았습니다. 집에서의 거리, 차량 이용 시간, 도보 안전, 하원 시간을 함께 살펴봅니다. 활동이 많은 아이, 낯가림이 있는 아이처럼 성향에 맞는 환경을 봅니다.',
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function HomePage() {

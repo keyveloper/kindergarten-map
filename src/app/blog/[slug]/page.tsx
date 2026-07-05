@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { BlogContentBlock, blogPosts } from '@/data/posts';
+import { siteConfig } from '@/lib/site';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -24,10 +25,24 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: post.title,
     description: post.description,
+    keywords: post.tags,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
+      url: `${siteConfig.url}/blog/${post.slug}`,
       type: 'article',
+      publishedTime: post.publishedAt,
+      tags: post.tags,
+      images: ['/images/kindergarten-map-hero.png'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+      images: ['/images/kindergarten-map-hero.png'],
     },
   };
 }
@@ -41,10 +56,70 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const relatedPosts = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const postUrl = `${siteConfig.url}/blog/${post.slug}`;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      datePublished: post.publishedAt,
+      dateModified: post.publishedAt,
+      url: postUrl,
+      image: `${siteConfig.url}/images/kindergarten-map-hero.png`,
+      inLanguage: 'ko-KR',
+      keywords: post.tags.join(', '),
+      author: {
+        '@type': 'Organization',
+        name: siteConfig.name,
+        url: siteConfig.url,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: siteConfig.name,
+        logo: {
+          '@type': 'ImageObject',
+          url: `${siteConfig.url}/images/brand-mark.png`,
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': postUrl,
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: '홈',
+          item: siteConfig.url,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: '블로그',
+          item: `${siteConfig.url}/blog`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: post.title,
+          item: postUrl,
+        },
+      ],
+    },
+  ];
 
   return (
     <main>
       <article>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <section className="post-hero">
           <Container className="post-hero-inner">
             <p className="post-breadcrumb">홈 &gt; 블로그 &gt; {post.category}</p>
