@@ -4,6 +4,8 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        # Amplify 콘솔 환경변수를 빌드용 .env.production으로 주입 (NEXT_PUBLIC_* 인라인 보장)
+        - env | grep -e NEXT_PUBLIC_KAKAO_MAP_KEY -e KINDERGARTEN_API_KEY >> .env.production || true
     build:
       commands:
         - npm run build
