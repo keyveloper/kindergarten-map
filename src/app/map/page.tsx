@@ -76,12 +76,29 @@ interface HomePoint {
   lat: number;
   lng: number;
   label: string;
+  kind: 'gps' | 'place';
 }
 
 const PUB_COLOR = '#1c736d'; // 공립 (대비 ≥4.5:1)
 const PRIV_COLOR = '#5a4cb8'; // 사립 (대비 ≥4.5:1)
 const MAX_COMPARE = 3;
 const PREFS_KEY = 'km_map_prefs_v1';
+
+const DEFAULT_FILTERS: Filters = {
+  establish: '전체',
+  age: '전체',
+  hasBus: false,
+  hasAfterSchool: false,
+  hasAvailability: false,
+};
+
+// 학부모 상황별 필터 조합 — 한 번 눌러 시나리오에 맞는 유치원만 강조
+const PRESETS: { key: string; label: string; hint: string; patch: Partial<Filters>; sort?: SortKey }[] = [
+  { key: 'dual', label: '맞벌이 추천', hint: '통학차량 + 방과후 운영', patch: { hasBus: true, hasAfterSchool: true } },
+  { key: 'public-seat', label: '국공립 빈자리', hint: '국공립 중 잔여석 있는 곳', patch: { establish: '공립', hasAvailability: true }, sort: 'availability' },
+  { key: 'seat', label: '바로 입학 가능', hint: '잔여석 있는 곳부터', patch: { hasAvailability: true }, sort: 'availability' },
+  { key: 'ratio', label: '교사비율 좋은 곳', hint: '교사 1인당 원아 적은 순', patch: {}, sort: 'ratio' },
+];
 
 // ---------- helpers ----------
 function isPublic(establish: string) {
@@ -223,6 +240,7 @@ export default function MapPage() {
   const markersByCodeRef = useRef<Map<string, any>>(new Map());
   const imageCacheRef = useRef<Record<string, any>>({});
   const homeMarkerRef = useRef<any>(null);
+  const homeOverlayRef = useRef<any>(null);
   const homeCircleRef = useRef<any>(null);
   const sortTouchedRef = useRef(false);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -241,13 +259,8 @@ export default function MapPage() {
   const [showDetailDetails, setShowDetailDetails] = useState(false);
   const [compareList, setCompareList] = useState<KG[]>([]);
   const [showCompare, setShowCompare] = useState(false);
-  const [filters, setFilters] = useState<Filters>({
-    establish: '전체',
-    age: '전체',
-    hasBus: false,
-    hasAfterSchool: false,
-    hasAvailability: false,
-  });
+  const [locating, setLocating] = useState(false);
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [sortKey, setSortKey] = useState<SortKey>('name');
 
   const currentSido = regions.find((r) => r.code === selectedSido);
@@ -344,6 +357,19 @@ export default function MapPage() {
     return arr;
   }, [filtered, sortKey, home, filters.age]);
 
+  // 선택 지역/필터 결과의 한줄 요약 (맵 위 오버레이용)
+  const summary = useMemo(() => {
+    const n = filtered.length;
+    if (!n) return null;
+    const pub = filtered.filter((k) => isPublic(k.establish)).length;
+    const withSeat = filtered.filter((k) => ageSeats(k, filters.age) > 0).length;
+    const ratios = filtered.map((k) => k.teacherStudentRatio).filter((r) => r > 0);
+    const avgRatio = ratios.length
+      ? Math.round((ratios.reduce((a, b) => a + b, 0) / ratios.length) * 10) / 10
+      : 0;
+    return { n, pubPct: Math.round((pub / n) * 100), withSeat, avgRatio };
+  }, [filtered, filters.age]);
+
   const activeFilterCount = [
     filters.establish !== '전체',
     filters.age !== '전체',
@@ -419,7 +445,10 @@ export default function MapPage() {
     });
 
     if (home) bounds.extend(new kakao.maps.LatLng(home.lat, home.lng));
-    map.setBounds(bounds);
+    // 여백을 넉넉히 줘 마커가 가장자리·오버레이(상단 요약/하단 범례)에 붙지 않게 한다
+    map.setBounds(bounds, 96, 72, 112, 72);
+    // 마커가 몰려 있을 때 과도하게 확대돼 답답해 보이는 것을 방지 (숫자 클수록 축소)
+    if (map.getLevel() < 4) map.setLevel(4);
     applyHighlight();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered, kakaoLoaded]);
@@ -442,20 +471,37 @@ export default function MapPage() {
     const map = mapInstanceRef.current;
     if (!kakao || !map) return;
     if (homeMarkerRef.current) homeMarkerRef.current.setMap(null);
+    if (homeOverlayRef.current) homeOverlayRef.current.setMap(null);
     if (homeCircleRef.current) homeCircleRef.current.setMap(null);
+    homeMarkerRef.current = null;
+    homeOverlayRef.current = null;
+    homeCircleRef.current = null;
     if (!home) return;
     const pos = new kakao.maps.LatLng(home.lat, home.lng);
-    homeMarkerRef.current = new kakao.maps.Marker({ map, position: pos, image: homeMarkerImage(kakao), zIndex: 200 });
+    const isGps = home.kind === 'gps';
+
+    if (isGps) {
+      // 현재 위치: 구글/카카오/네이버 공통의 파란 점 + 맥동(pulse) 오버레이
+      const el = document.createElement('div');
+      el.className = 'km-gps';
+      el.innerHTML = '<span class="km-gps-pulse"></span><span class="km-gps-dot"></span>';
+      homeOverlayRef.current = new kakao.maps.CustomOverlay({ map, position: pos, content: el, zIndex: 210, yAnchor: 0.5, xAnchor: 0.5 });
+    } else {
+      // 검색한 장소: 기준점을 나타내는 핀
+      homeMarkerRef.current = new kakao.maps.Marker({ map, position: pos, image: homeMarkerImage(kakao), zIndex: 200 });
+    }
+
+    // 반경 1km 안내 링 — 도보 거리 감을 준다 (현재 위치는 파랑, 검색 장소는 노랑)
     homeCircleRef.current = new kakao.maps.Circle({
       map,
       center: pos,
       radius: 1000,
       strokeWeight: 1,
-      strokeColor: '#1b1c1f',
-      strokeOpacity: 0.4,
+      strokeColor: isGps ? '#4285F4' : '#1b1c1f',
+      strokeOpacity: isGps ? 0.5 : 0.4,
       strokeStyle: 'shortdash',
-      fillColor: '#f6c945',
-      fillOpacity: 0.08,
+      fillColor: isGps ? '#4285F4' : '#f6c945',
+      fillOpacity: isGps ? 0.06 : 0.08,
     });
   }, [home, kakaoLoaded]);
 
@@ -473,7 +519,7 @@ export default function MapPage() {
   }
 
   const applyCoords = useCallback(
-    (lat: number, lng: number, label: string) => {
+    (lat: number, lng: number, label: string, kind: 'gps' | 'place') => {
       const kakao = window.kakao;
       if (!kakao?.maps?.services) return;
       const geocoder = new kakao.maps.services.Geocoder();
@@ -485,7 +531,7 @@ export default function MapPage() {
         const region = result.find((r) => r.region_type === 'B') || result[0];
         const sgg = region?.code?.slice(0, 5);
         const sido = SGG_TO_SIDO.get(sgg);
-        setHome({ lat, lng, label });
+        setHome({ lat, lng, label, kind });
         if (sido && sgg) {
           toast('');
           setSelectedSido(sido);
@@ -518,13 +564,13 @@ export default function MapPage() {
         ? data.find((d) => Number(d.y) && Number(d.x))
         : null;
       if (valid) {
-        applyCoords(Number(valid.y), Number(valid.x), valid.place_name || q);
+        applyCoords(Number(valid.y), Number(valid.x), valid.place_name || q, 'place');
         return;
       }
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(q, (res: any[], st: any) => {
         if (st === kakao.maps.services.Status.OK && res.length > 0 && Number(res[0].y)) {
-          applyCoords(Number(res[0].y), Number(res[0].x), res[0].address_name || q);
+          applyCoords(Number(res[0].y), Number(res[0].x), res[0].address_name || q, 'place');
         } else {
           toast('검색 결과가 없어요. 동/도로명 또는 건물명으로 검색해 보세요.');
         }
@@ -533,16 +579,43 @@ export default function MapPage() {
   }
 
   function handleMyLocation() {
+    if (locating) return;
     if (!navigator.geolocation) {
-      toast('이 브라우저에서는 위치 기능을 지원하지 않아요.');
+      toast('이 브라우저에서는 위치 기능을 사용할 수 없어요. 동네 이름으로 검색해 주세요.');
       return;
     }
+    setLocating(true);
     toast('현재 위치를 찾는 중...', true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => applyCoords(pos.coords.latitude, pos.coords.longitude, '현재 위치'),
-      () => toast('위치 권한이 필요해요. 동네 이름으로 검색해 주세요.'),
-      { enableHighAccuracy: true, timeout: 8000 }
-    );
+
+    const onOk = (pos: GeolocationPosition) => {
+      setLocating(false);
+      applyCoords(pos.coords.latitude, pos.coords.longitude, '현재 위치', 'gps');
+    };
+    const onErr = (err: GeolocationPositionError, isFallback: boolean) => {
+      // code 1: 권한 거부, code 2: 위치 확인 불가, code 3: 시간 초과
+      if (err.code === err.PERMISSION_DENIED) {
+        setLocating(false);
+        toast('위치 접근이 꺼져 있어요. 주소창의 위치 아이콘에서 허용하거나, 동네 이름으로 검색해 주세요.', true);
+        return;
+      }
+      if (!isFallback) {
+        // 고정밀 실패(실내·데스크톱 등) 시 저정밀·캐시 허용으로 한 번 더 시도
+        navigator.geolocation.getCurrentPosition(onOk, (e) => onErr(e, true), {
+          enableHighAccuracy: false,
+          timeout: 12000,
+          maximumAge: 300000,
+        });
+        return;
+      }
+      setLocating(false);
+      toast('현재 위치를 찾지 못했어요. 동네 이름이나 주소로 검색해 주세요.', true);
+    };
+
+    navigator.geolocation.getCurrentPosition(onOk, (e) => onErr(e, false), {
+      enableHighAccuracy: true,
+      timeout: 8000,
+      maximumAge: 60000,
+    });
   }
 
   function selectCard(k: KG) {
@@ -553,7 +626,30 @@ export default function MapPage() {
   }
 
   function resetFilters() {
-    setFilters({ establish: '전체', age: '전체', hasBus: false, hasAfterSchool: false, hasAvailability: false });
+    setFilters(DEFAULT_FILTERS);
+  }
+
+  function presetActive(p: (typeof PRESETS)[number]) {
+    const target = { ...DEFAULT_FILTERS, age: filters.age, ...p.patch };
+    return (
+      filters.establish === target.establish &&
+      filters.hasBus === target.hasBus &&
+      filters.hasAfterSchool === target.hasAfterSchool &&
+      filters.hasAvailability === target.hasAvailability &&
+      (!p.sort || sortKey === p.sort)
+    );
+  }
+
+  function applyPreset(p: (typeof PRESETS)[number]) {
+    if (presetActive(p)) {
+      resetFilters();
+      return;
+    }
+    setFilters((f) => ({ ...DEFAULT_FILTERS, age: f.age, ...p.patch }));
+    if (p.sort) {
+      sortTouchedRef.current = true;
+      setSortKey(p.sort);
+    }
   }
 
   function toggleCompare(k: KG) {
@@ -596,9 +692,9 @@ export default function MapPage() {
               />
               <button type="submit" className="map-search-btn">검색</button>
             </form>
-            <button type="button" className="map-loc-btn" onClick={handleMyLocation}>
+            <button type="button" className="map-loc-btn" onClick={handleMyLocation} disabled={locating}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /></svg>
-              내 위치
+              {locating ? '찾는 중…' : '내 위치'}
             </button>
             <div className="map-selectors">
               <select className="map-select" value={selectedSido} onChange={(e) => handleSidoChange(e.target.value)} aria-label="시/도 선택">
@@ -610,6 +706,25 @@ export default function MapPage() {
                 {currentSido?.sgg.map((s) => (<option key={s.code} value={s.code}>{s.name}</option>))}
               </select>
             </div>
+          </div>
+
+          <div className="map-presets" role="group" aria-label="상황별 추천 조합">
+            <span className="map-presets-label">추천 조합</span>
+            {PRESETS.map((p) => {
+              const on = presetActive(p);
+              return (
+                <button
+                  key={p.key}
+                  type="button"
+                  className={`map-preset ${on ? 'on' : ''}`}
+                  aria-pressed={on}
+                  onClick={() => applyPreset(p)}
+                  title={p.hint}
+                >
+                  {p.label}
+                </button>
+              );
+            })}
           </div>
 
           <div className="map-filterbar" role="group" aria-label="필터 및 정렬">
@@ -733,6 +848,35 @@ export default function MapPage() {
             <div ref={mapRef} className="map-canvas" />
             <div className="map-toast-wrap" role="status" aria-live="polite">{searchMsg && <div className="map-toast">{searchMsg}</div>}</div>
             {!hasRegion && !loading && (<div className="map-hint">← 왼쪽에서 동네를 검색하거나 지역을 선택하세요</div>)}
+            {hasRegion && !loading && summary && (
+              <div className="map-summary-overlay" role="status" aria-live="polite">
+                <strong className="map-summary-overlay-n">{summary.n}곳</strong>
+                <span className="map-summary-overlay-sep" aria-hidden="true" />
+                <span>국공립 {summary.pubPct}%</span>
+                <span className="map-summary-overlay-sep" aria-hidden="true" />
+                <span>빈자리 {summary.withSeat}곳</span>
+                {summary.avgRatio > 0 && (
+                  <>
+                    <span className="map-summary-overlay-sep" aria-hidden="true" />
+                    <span>평균 교사 1:{summary.avgRatio}</span>
+                  </>
+                )}
+              </div>
+            )}
+            <button
+              type="button"
+              className="km-fab"
+              onClick={handleMyLocation}
+              disabled={locating}
+              aria-label="내 위치로 이동"
+              title="내 위치"
+            >
+              {locating ? (
+                <span className="km-fab-spin" aria-hidden="true" />
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /></svg>
+              )}
+            </button>
             <div className="map-legend">
               <span className="map-legend-item"><span className="map-legend-dot map-legend-public">공</span>공립</span>
               <span className="map-legend-item"><span className="map-legend-dot map-legend-private">사</span>사립</span>
@@ -766,6 +910,89 @@ export default function MapPage() {
           <CompareView list={compareList} home={home} onClose={() => setShowCompare(false)} onRemove={toggleCompare} />
         )}
       </main>
+
+      <style jsx global>{`
+        /* 내 위치 FAB — 지도 우하단 (카카오/네이버/구글 공통 위치) */
+        .km-fab {
+          position: absolute;
+          right: 14px;
+          bottom: 104px;
+          z-index: 5;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: #5f6368;
+          cursor: pointer;
+          transition: background 150ms ease, color 150ms ease;
+        }
+        .km-fab:hover {
+          background: #f5f5f5;
+          color: #1f6f6b;
+        }
+        .km-fab:disabled {
+          cursor: default;
+        }
+        .km-fab-spin {
+          width: 20px;
+          height: 20px;
+          border: 2.5px solid rgba(31, 111, 107, 0.25);
+          border-top-color: #1f6f6b;
+          border-radius: 50%;
+          animation: km-spin 0.7s linear infinite;
+        }
+        @keyframes km-spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        /* 현재 위치 파란 점 + 맥동 */
+        .km-gps {
+          position: relative;
+          width: 18px;
+          height: 18px;
+        }
+        .km-gps-dot,
+        .km-gps-pulse {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .km-gps-dot {
+          background: #4285f4;
+          border: 3px solid #fff;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+        }
+        .km-gps-pulse {
+          background: #4285f4;
+          opacity: 0.5;
+          animation: km-gps-pulse 1.8s ease-out infinite;
+        }
+        @keyframes km-gps-pulse {
+          0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.5;
+          }
+          100% {
+            transform: translate(-50%, -50%) scale(2.6);
+            opacity: 0;
+          }
+        }
+        @media (max-width: 768px) {
+          .km-fab {
+            bottom: 120px;
+          }
+        }
+      `}</style>
     </>
   );
 }
