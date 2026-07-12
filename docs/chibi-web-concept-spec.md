@@ -46,9 +46,10 @@
 
 ## Design Tokens
 
-- Primary: strawberry coral `#D95D6C`, hover `#BF4656`, 흰색 텍스트
-- Secondary: calm teal `#287D75`, 정보·보조 행동·상태 표시
-- Accent: sunshine yellow `#FFD85A`, 작은 강조와 치비 장식에만 사용
+- Primary: calm teal `#247A72`, hover `#195F59`, 주요 CTA와 활성 상태
+- Secondary: muted blue `#406A86`, 보조 행동과 정보 링크
+- Accent: strawberry coral `#E97987`, 작은 치비 장식에만 사용
+- Sunshine yellow `#FFD85A`는 캐릭터와 그림 속 포인트로 제한한다.
 - Canvas: warm ivory `#FFF9ED`, Surface: paper white `#FFFEFA`
 - Text: ink `#342E2B`, Muted `#625B57`
 - Border: `#EADFCE`, strong border `#D8C8B1`
@@ -103,6 +104,7 @@
 - Blog detail: 본문은 장식 최소화, note/image/callout에만 부드러운 캐릭터 요소를 제한적으로 쓴다.
 - Blog imagery: 모든 게시글에 주제별 치비 장면 2장을 배치한다. 첫 이미지는 요약 다음, 두 번째는 본문 중간에 두며 1200x800 WebP로 제공한다.
 - Map: 지도 조작, 필터, 검색 결과 가독성이 우선이다. 치비 요소는 empty/loading/help 상태에만 사용한다.
+- Map toolbar: 데스크톱은 장소 찾기 1행과 결과 좁히기 1행만 사용한다. 추천 조건은 단일 select로 합치고 정렬은 검색 행 우측에 둔다.
 - About/Terms/Privacy: 신뢰와 명확성이 우선이므로 치비 장식은 최소화한다.
 
 ## Avoid

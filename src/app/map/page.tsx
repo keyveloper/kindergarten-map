@@ -669,6 +669,7 @@ export default function MapPage() {
   const isComparing = (code: string) => compareList.some((x) => x.kindercode === code);
   const selDist = selected && home ? distanceKm(home.lat, home.lng, selected.lat, selected.lng) : null;
   const hasRegion = !!selectedSgg;
+  const activePresetKey = PRESETS.find((preset) => presetActive(preset))?.key ?? '';
 
   return (
     <>
@@ -707,28 +708,21 @@ export default function MapPage() {
                 {currentSido?.sgg.map((s) => (<option key={s.code} value={s.code}>{s.name}</option>))}
               </select>
             </div>
-          </div>
-
-          <div className="map-presets" role="group" aria-label="상황별 추천 조합">
-            <span className="map-presets-label">추천 조합</span>
-            {PRESETS.map((p) => {
-              const on = presetActive(p);
-              return (
-                <button
-                  key={p.key}
-                  type="button"
-                  className={`map-preset ${on ? 'on' : ''}`}
-                  aria-pressed={on}
-                  onClick={() => applyPreset(p)}
-                  title={p.hint}
-                >
-                  {p.label}
-                </button>
-              );
-            })}
+            <select
+              className="map-select map-sort-select"
+              value={sortKey}
+              onChange={(e) => { sortTouchedRef.current = true; setSortKey(e.target.value as SortKey); }}
+              aria-label="정렬 기준"
+            >
+              <option value="distance" disabled={!home}>가까운 순{!home ? ' (위치 필요)' : ''}</option>
+              <option value="name">이름순</option>
+              <option value="availability">빈자리 많은 순</option>
+              <option value="ratio">교사비율 좋은 순</option>
+            </select>
           </div>
 
           <div className="map-filterbar" role="group" aria-label="필터 및 정렬">
+            <span className="map-filter-label">결과 좁히기</span>
             <div className="map-seg" role="group" aria-label="설립 유형">
               {(['전체', '공립', '사립'] as EstablishFilter[]).map((v) => (
                 <button key={v} className={`map-seg-btn ${filters.establish === v ? 'active' : ''}`} aria-pressed={filters.establish === v} onClick={() => setFilters({ ...filters, establish: v })}>{v}</button>
@@ -745,20 +739,22 @@ export default function MapPage() {
               <option value="4">만 4세</option>
               <option value="5">만 5세</option>
             </select>
+            <span className="map-filter-div" aria-hidden="true" />
+            <select
+              className="map-select map-select-sm map-preset-select"
+              value={activePresetKey}
+              onChange={(e) => {
+                const preset = PRESETS.find((item) => item.key === e.target.value);
+                if (preset) applyPreset(preset);
+              }}
+              aria-label="상황별 추천 조건"
+            >
+              <option value="">추천 조건</option>
+              {PRESETS.map((preset) => (
+                <option key={preset.key} value={preset.key}>{preset.label}</option>
+              ))}
+            </select>
             {activeFilterCount > 0 && (<button className="map-filter-reset" onClick={resetFilters}>초기화</button>)}
-            <div className="map-filterbar-right">
-              <select
-                className="map-select map-select-sm"
-                value={sortKey}
-                onChange={(e) => { sortTouchedRef.current = true; setSortKey(e.target.value as SortKey); }}
-                aria-label="정렬 기준"
-              >
-                <option value="distance" disabled={!home}>가까운 순{!home ? ' (위치 필요)' : ''}</option>
-                <option value="name">이름순</option>
-                <option value="availability">빈자리 많은 순</option>
-                <option value="ratio">교사 대 원아 비율순</option>
-              </select>
-            </div>
           </div>
         </div>
 
