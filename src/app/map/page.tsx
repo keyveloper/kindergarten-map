@@ -385,7 +385,14 @@ export default function MapPage() {
     mapInstanceRef.current = new kakao.maps.Map(mapRef.current, {
       center: new kakao.maps.LatLng(37.5665, 126.978),
       level: 7,
+      draggable: true,
+      scrollwheel: true,
     });
+
+    // 지도 위 UI가 추가되거나 반응형 레이아웃이 바뀌어도 기본 탐색 제스처를
+    // 잃지 않도록 명시적으로 활성화한다.
+    mapInstanceRef.current.setDraggable(true);
+    mapInstanceRef.current.setZoomable(true);
   }, [kakaoLoaded]);
 
   const getImage = useCallback((isPub: boolean, state: 'base' | 'hover' | 'selected') => {

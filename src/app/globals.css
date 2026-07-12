@@ -2489,6 +2489,12 @@ h3 {
 .map-canvas {
   width: 100%;
   height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.map-canvas:active {
+  cursor: grabbing;
 }
 
 .map-toast {
@@ -2521,6 +2527,7 @@ h3 {
   color: var(--color-muted);
   z-index: 5;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .map-summary-overlay {
@@ -2540,6 +2547,7 @@ h3 {
   z-index: 5;
   flex-wrap: wrap;
   max-width: calc(100% - 24px);
+  pointer-events: none;
 }
 
 .map-summary-overlay-n {
@@ -2571,6 +2579,7 @@ h3 {
   z-index: 5;
   flex-wrap: wrap;
   max-width: calc(100% - 24px);
+  pointer-events: none;
 }
 
 .map-legend-item {
