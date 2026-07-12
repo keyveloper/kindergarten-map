@@ -63,13 +63,20 @@ export default function BlogPage() {
             통학 기준까지 실제로 확인할 내용을 차근차근 정리했습니다.
           </p>
         </div>
-        <div className="article-layout">
+        <section className="featured-article" aria-label="추천 글">
           <ArticleCard post={featuredPost} featured />
-          <div className="article-stack">
-            {otherPosts.map((post) => (
-              <ArticleCard key={post.slug} post={post} />
-            ))}
+        </section>
+        <div className="article-section-heading">
+          <div>
+            <p className="eyebrow">Latest stories</p>
+            <h2>최근에 올라온 글</h2>
           </div>
+          <p>유치원 선택과 입학 준비에 필요한 내용을 주제별로 살펴보세요.</p>
+        </div>
+        <div className="article-grid">
+          {otherPosts.map((post) => (
+            <ArticleCard key={post.slug} post={post} />
+          ))}
         </div>
       </Container>
     </main>
