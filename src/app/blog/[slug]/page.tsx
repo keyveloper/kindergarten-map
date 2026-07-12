@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Fragment } from 'react';
 import { Container } from '@/components/ui/Container';
 import { BlogContentBlock, publishedPosts as blogPosts } from '@/data/posts';
 import { siteConfig } from '@/lib/site';
@@ -36,13 +37,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.publishedAt,
       tags: post.tags,
-      images: ['/images/chibi-kindergarten-guide.webp'],
+      images: [`/images/posts/${post.slug}-1.webp`],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['/images/chibi-kindergarten-guide.webp'],
+      images: [`/images/posts/${post.slug}-1.webp`],
     },
   };
 }
@@ -56,6 +57,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const relatedPosts = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const secondIllustrationIndex = post.content.findIndex(
+    (block, index) => index >= post.content.length / 2 && block.type === 'h2',
+  );
   const postUrl = `${siteConfig.url}/blog/${post.slug}`;
   const jsonLd = [
     {
@@ -66,7 +70,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       datePublished: post.publishedAt,
       dateModified: post.publishedAt,
       url: postUrl,
-      image: `${siteConfig.url}/images/chibi-kindergarten-guide.webp`,
+      image: [
+        `${siteConfig.url}/images/posts/${post.slug}-1.webp`,
+        `${siteConfig.url}/images/posts/${post.slug}-2.webp`,
+      ],
       inLanguage: 'ko-KR',
       keywords: post.tags.join(', '),
       author: {
@@ -127,7 +134,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <p className="post-description">{post.description}</p>
             <div className="post-meta-line">
               <span>{post.publishedAt}</span>
-              <span>읽는시간 {post.readingMinutes}분</span>
+              <span>약 {post.readingMinutes}분이면 읽어요</span>
             </div>
           </Container>
         </section>
@@ -135,13 +142,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <Container className="post-container">
           <div className="post-article">
             <section className="post-summary-card" aria-labelledby="summary-title">
-              <h2 id="summary-title">3줄 요약</h2>
+              <h2 id="summary-title">먼저 볼 핵심 3가지</h2>
               {post.summary.map((item) => (
                 <p key={item}>{item}</p>
               ))}
             </section>
 
-            {post.content.map((block, index) => renderContentBlock(block, index))}
+            <PostIllustration
+              slug={post.slug}
+              index={1}
+              alt={`${post.title}의 핵심 내용을 설명하는 치비 일러스트`}
+              caption="글의 핵심 상황을 부모와 아이의 하루 장면으로 정리했습니다."
+              priority
+            />
+
+            {post.content.map((block, index) => (
+              <Fragment key={`${block.type}-${index}`}>
+                {index === secondIllustrationIndex ? (
+                  <PostIllustration
+                    slug={post.slug}
+                    index={2}
+                    alt={`${post.title}의 선택 기준을 보여주는 치비 일러스트`}
+                    caption="조건을 하나씩 비교하면 우리 가족에게 맞는 선택이 더 선명해집니다."
+                  />
+                ) : null}
+                {renderContentBlock(block, index)}
+              </Fragment>
+            ))}
 
             <section className="post-tags" aria-label="태그">
               {post.tags.map((tag) => (
@@ -162,6 +189,36 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </Container>
       </article>
     </main>
+  );
+}
+
+interface PostIllustrationProps {
+  slug: string;
+  index: 1 | 2;
+  alt: string;
+  caption: string;
+  priority?: boolean;
+}
+
+function PostIllustration({
+  slug,
+  index,
+  alt,
+  caption,
+  priority = false,
+}: PostIllustrationProps) {
+  return (
+    <figure className="post-image post-generated-image">
+      <Image
+        src={`/images/posts/${slug}-${index}.webp`}
+        alt={alt}
+        width={1200}
+        height={800}
+        sizes="(max-width: 768px) calc(100vw - 32px), 760px"
+        priority={priority}
+      />
+      <figcaption>{caption}</figcaption>
+    </figure>
   );
 }
 

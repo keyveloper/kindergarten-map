@@ -19,7 +19,7 @@ export function ArticleCard({ post, featured = false }: ArticleCardProps) {
       </h3>
       <p>{post.description}</p>
       <Link className="text-link" href={`/blog/${post.slug}`}>
-        글 읽기
+        차근차근 읽어보기
       </Link>
     </article>
   );

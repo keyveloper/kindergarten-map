@@ -56,11 +56,11 @@ export default function BlogPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <div className="blog-page-heading">
-          <p className="eyebrow">Blog</p>
-          <h1>블로그</h1>
+          <p className="eyebrow">Parent guide</p>
+          <h1>부모를 위한 유치원 가이드</h1>
           <p>
-            유치원 선택 전 확인할 상담 질문, 입학 준비, 생활 습관, 통학 거리 기준을
-            부모가 바로 비교할 수 있게 정리했습니다.
+            복잡한 유치원 선택 앞에서 조금 덜 막막하도록, 상담 질문부터 입학 준비와
+            통학 기준까지 실제로 확인할 내용을 차근차근 정리했습니다.
           </p>
         </div>
         <div className="article-layout">

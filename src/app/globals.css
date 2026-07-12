@@ -2,10 +2,10 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendard-variable.min.css");
 
 :root {
-  --color-primary: #ffd85a;
-  --color-primary-strong: #f5bf32;
+  --color-primary: #d95d6c;
+  --color-primary-strong: #bf4656;
   --color-secondary: #287d75;
-  --color-accent: #ef7181;
+  --color-accent: #ffd85a;
   --color-sky: #9bcfea;
   --color-mint: #a8d8c7;
   --color-ink: #342e2b;
@@ -15,12 +15,12 @@
   --color-canvas: #fff9ed;
   --color-border: #eadfce;
   --color-border-strong: #d8c8b1;
-  --font-display: "Jua", "Pretendard Variable", sans-serif;
+  --font-display: "Pretendard Variable", Pretendard, sans-serif;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
   --container: 1080px;
-  --radius: 24px;
-  --radius-sm: 14px;
+  --radius: 20px;
+  --radius-sm: 12px;
   --shadow-sm: 0 3px 0 rgba(94, 70, 53, 0.12);
   --shadow-md: 0 16px 40px rgba(94, 70, 53, 0.13);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -2185,6 +2185,300 @@ h3 {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Chibi system refinement: typography, hierarchy, controls ---------- */
+body {
+  color: #342e2b;
+  font-size: 17px;
+  line-height: 1.72;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: #302a27;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  font-weight: 850;
+}
+
+h2 {
+  font-weight: 800;
+}
+
+h3 {
+  font-weight: 750;
+}
+
+.brand {
+  font-family: "Jua", var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+.primary-nav a {
+  font-weight: 700;
+}
+
+.hero-copy h1 {
+  font-weight: 850;
+  letter-spacing: -0.045em;
+}
+
+.button {
+  min-height: 50px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(70, 49, 41, 0.1);
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.button:hover {
+  box-shadow: 0 8px 18px rgba(70, 49, 41, 0.15);
+}
+
+.button:active {
+  box-shadow: 0 3px 8px rgba(70, 49, 41, 0.12);
+}
+
+.button-primary,
+.button-primary:hover {
+  border-color: var(--color-primary-strong);
+  color: #fff;
+  background: var(--color-primary);
+}
+
+.button-primary:hover {
+  background: var(--color-primary-strong);
+}
+
+.button-secondary {
+  border-color: #86b8b2;
+  color: #1f675f;
+  background: #f5fbf9;
+}
+
+.button-secondary:hover {
+  border-color: var(--color-secondary);
+  color: #174f49;
+  background: #eaf6f2;
+}
+
+.hero-illustration,
+.hero-info-chip {
+  border-color: #7a6256;
+}
+
+.home-body,
+.article-card,
+.post-summary-card,
+.post-note,
+.post-cta,
+.static-page {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 28px rgba(79, 57, 45, 0.08);
+}
+
+.home-list-item::before {
+  border-color: #80673b;
+  background: var(--color-accent);
+}
+
+.blog-page {
+  padding-top: 64px;
+  padding-bottom: 84px;
+}
+
+.blog-page-heading {
+  margin-bottom: 44px;
+}
+
+.blog-page-heading h1 {
+  font-size: clamp(38px, 5vw, 52px);
+  font-weight: 850;
+}
+
+.article-layout {
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+  gap: 28px;
+}
+
+.article-stack {
+  gap: 18px;
+}
+
+.article-card {
+  padding: 26px;
+}
+
+.article-card h3 {
+  font-size: 21px;
+  line-height: 1.42;
+  font-weight: 800;
+}
+
+.article-card-featured {
+  padding: 38px;
+  background: linear-gradient(145deg, #fff3d5 0%, #fffefa 68%);
+}
+
+.article-card-featured h3 {
+  font-size: 30px;
+}
+
+.post-hero {
+  padding-top: 68px;
+  padding-bottom: 54px;
+}
+
+.post-hero-inner {
+  max-width: 860px;
+}
+
+.post-hero h1 {
+  max-width: 20ch;
+  font-size: clamp(38px, 5.2vw, 54px);
+  line-height: 1.22;
+  font-weight: 850;
+}
+
+.post-description {
+  max-width: 62ch;
+  font-size: 19px;
+  line-height: 1.72;
+}
+
+.post-container {
+  padding-top: 56px;
+  padding-bottom: 88px;
+}
+
+.post-article {
+  max-width: 760px;
+}
+
+.post-summary-card {
+  padding: 30px 32px;
+  background: #fff9e9;
+}
+
+.post-summary-card h2 {
+  color: #9f4250;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.post-summary-card p {
+  font-size: 16.5px;
+}
+
+.post-heading-block {
+  margin-top: 58px;
+}
+
+.post-section-eyebrow {
+  color: #a24552;
+  font-weight: 750;
+}
+
+.post-heading-block h2 {
+  font-size: 31px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.post-subheading {
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.post-article > p {
+  color: #3f3935;
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.post-generated-image {
+  overflow: hidden;
+  margin: 42px 0 48px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  background: #fff9ed;
+  box-shadow: 0 12px 30px rgba(78, 56, 43, 0.1);
+}
+
+.post-generated-image img {
+  border: 0;
+  border-radius: 0;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.post-generated-image figcaption {
+  margin: 0;
+  padding: 13px 18px 15px;
+  border-top: 1px solid var(--color-border);
+  color: #746a64;
+  background: #fffefa;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.post-note {
+  padding: 28px 30px;
+  background: #edf8f5;
+}
+
+.post-note h3 {
+  color: #216a63;
+  font-weight: 800;
+}
+
+.post-cta {
+  padding: 26px 30px;
+  background: #fff1f3;
+}
+
+.post-related h2 {
+  font-weight: 800;
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 16px;
+  }
+
+  .hero-copy h1,
+  .post-hero h1 {
+    font-size: 34px;
+    line-height: 1.24;
+  }
+
+  .post-description {
+    font-size: 17px;
+  }
+
+  .post-summary-card {
+    padding: 22px;
+  }
+
+  .post-heading-block {
+    margin-top: 46px;
+  }
+
+  .post-heading-block h2 {
+    font-size: 25px;
+  }
+
+  .post-generated-image {
+    margin: 32px 0 38px;
+    border-radius: 16px;
   }
 }
 

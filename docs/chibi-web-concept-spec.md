@@ -38,10 +38,22 @@
 
 ## Typography
 
-- Heading mood: Fredoka, Jua, Baloo 2처럼 둥근 인상의 display font를 후보로 둔다.
-- Body mood: Nunito, Pretendard, Noto Sans KR처럼 읽기 편한 본문 글꼴을 우선한다.
-- 본문 최소 크기는 모바일 16px 이상을 유지한다.
-- 제목은 귀엽게, 설명과 데이터는 차분하게 분리한다.
+- Brand: Jua 400으로 친근한 인상을 주되 로고 영역에만 제한한다.
+- Heading: Pretendard Variable 750-850, 자간 -0.035em으로 둥글고 단단한 정보 위계를 만든다.
+- Body: Pretendard Variable 400-500, 데스크톱 17-18px/행간 1.72-1.9, 모바일 최소 16px을 유지한다.
+- 제목은 선명하고 자신 있게, 설명과 데이터는 차분하고 읽기 쉽게 분리한다.
+- 글의 문체는 부모를 가르치기보다 함께 확인하는 말투를 사용한다. 불안을 자극하거나 단정하지 않는다.
+
+## Design Tokens
+
+- Primary: strawberry coral `#D95D6C`, hover `#BF4656`, 흰색 텍스트
+- Secondary: calm teal `#287D75`, 정보·보조 행동·상태 표시
+- Accent: sunshine yellow `#FFD85A`, 작은 강조와 치비 장식에만 사용
+- Canvas: warm ivory `#FFF9ED`, Surface: paper white `#FFFEFA`
+- Text: ink `#342E2B`, Muted `#625B57`
+- Border: `#EADFCE`, strong border `#D8C8B1`
+- Radius: card 20px, control 12-14px, image 20px
+- Shadow: 큰 검은 외곽선 대신 낮은 대비의 warm brown shadow를 사용한다.
 
 ## Layout
 
@@ -89,6 +101,7 @@
 - Home: 치비 캐릭터와 유치원 지도/블로그 진입 CTA를 함께 보여준다.
 - Blog index: 카테고리별 작은 치비 오브젝트는 가능하지만, 제목/요약/작성일/태그 위계가 우선이다.
 - Blog detail: 본문은 장식 최소화, note/image/callout에만 부드러운 캐릭터 요소를 제한적으로 쓴다.
+- Blog imagery: 모든 게시글에 주제별 치비 장면 2장을 배치한다. 첫 이미지는 요약 다음, 두 번째는 본문 중간에 두며 1200x800 WebP로 제공한다.
 - Map: 지도 조작, 필터, 검색 결과 가독성이 우선이다. 치비 요소는 empty/loading/help 상태에만 사용한다.
 - About/Terms/Privacy: 신뢰와 명확성이 우선이므로 치비 장식은 최소화한다.
 
