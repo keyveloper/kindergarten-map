@@ -18,14 +18,14 @@ export const metadata: Metadata = {
       '유치원 선택과 입학 준비에 필요한 상담 질문, 생활 습관, 통학 거리 정보를 한곳에 모았습니다.',
     url: `${siteConfig.url}/blog`,
     type: 'website',
-    images: ['/images/kindergarten-map-hero.png'],
+    images: ['/images/chibi-kindergarten-guide.webp'],
   },
   twitter: {
     card: 'summary_large_image',
     title: `블로그 | ${siteConfig.name}`,
     description:
       '유치원 선택과 입학 준비에 필요한 상담 질문, 생활 습관, 통학 거리 정보를 한곳에 모았습니다.',
-    images: ['/images/kindergarten-map-hero.png'],
+    images: ['/images/chibi-kindergarten-guide.webp'],
   },
 };
 

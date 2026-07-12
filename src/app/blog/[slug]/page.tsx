@@ -36,13 +36,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.publishedAt,
       tags: post.tags,
-      images: ['/images/kindergarten-map-hero.png'],
+      images: ['/images/chibi-kindergarten-guide.webp'],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['/images/kindergarten-map-hero.png'],
+      images: ['/images/chibi-kindergarten-guide.webp'],
     },
   };
 }
@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       datePublished: post.publishedAt,
       dateModified: post.publishedAt,
       url: postUrl,
-      image: `${siteConfig.url}/images/kindergarten-map-hero.png`,
+      image: `${siteConfig.url}/images/chibi-kindergarten-guide.webp`,
       inLanguage: 'ko-KR',
       keywords: post.tags.join(', '),
       author: {

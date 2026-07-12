@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 
@@ -37,46 +38,25 @@ export default function HomePage() {
           </p>
         </section>
 
-        <div className="hero-preview" role="img" aria-label="지도 목록 화면 예시: 검색한 동네 주변 유치원이 거리순으로 나오고, 유치원마다 교사 대 원아 수와 연령별 잔여석, 통학차량 여부가 표시됩니다.">
-          <div className="hp-bar" aria-hidden="true">
-            <span className="hp-search">역삼동</span>
-            <span className="hp-search-go">검색</span>
+        <div className="hero-visual">
+          <div className="hero-illustration">
+            <Image
+              src="/images/chibi-kindergarten-guide.webp"
+              alt="동네 지도를 든 치비 안내 캐릭터와 유치원, 통학버스 일러스트"
+              width={1200}
+              height={900}
+              priority
+              sizes="(max-width: 768px) calc(100vw - 40px), 520px"
+            />
           </div>
-          <ul className="hp-list" aria-hidden="true">
-            <li>
-              <div className="hp-top">
-                <span className="hp-name">햇살유치원</span>
-                <span className="hp-dist">320m</span>
-              </div>
-              <div className="hp-tags">
-                <span>교사 1 : 11</span>
-                <span>만 4세 잔여 2</span>
-                <span>통학차량</span>
-              </div>
-            </li>
-            <li>
-              <div className="hp-top">
-                <span className="hp-name">가온누리유치원</span>
-                <span className="hp-dist">540m</span>
-              </div>
-              <div className="hp-tags">
-                <span>교사 1 : 14</span>
-                <span>만 4세 잔여 0</span>
-                <span>방과후</span>
-              </div>
-            </li>
-            <li>
-              <div className="hp-top">
-                <span className="hp-name">푸른숲유치원</span>
-                <span className="hp-dist">760m</span>
-              </div>
-              <div className="hp-tags">
-                <span>교사 1 : 9</span>
-                <span>만 4세 잔여 3</span>
-                <span>급식 직영</span>
-              </div>
-            </li>
-          </ul>
+          <div className="hero-info-chip hero-info-chip-distance" aria-hidden="true">
+            <span>가까운 순</span>
+            <strong>320m</strong>
+          </div>
+          <div className="hero-info-chip hero-info-chip-data" aria-hidden="true">
+            <span>공식 데이터</span>
+            <strong>한눈에 비교</strong>
+          </div>
         </div>
       </Container>
 
