@@ -16,63 +16,45 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="home">
-      <Container className="hero-grid home-hero">
-        <section className="hero-copy" aria-labelledby="home-title">
-          <p className="hero-kicker"><GameIcon name="compass" size={18} /> 우리 아이 첫 모험을 위한 안내소</p>
-          <h1 id="home-title">
-            우리 동네 유치원,
-            <br />
-            <span>탐험 지도</span>에서 찾아보세요
-          </h1>
-          <p>
-            동네 이름이나 주소를 검색하면 주변 유치원을 거리순으로 보여드립니다. 교사
-            1인당 원아 수, 연령별 빈자리, 급식과 통학차량, 방과후 과정을 한 화면에
-            놓고 비교해 우리 아이에게 맞는 곳을 고르세요.
-          </p>
-          <div className="hero-actions">
-            <Button href="/map"><GameIcon name="map" /> 지도 탐험 시작하기</Button>
-            <Button href="/blog" variant="secondary">
-              <GameIcon name="book" /> 부모 모험 가이드
-            </Button>
-          </div>
-          <div className="hero-trust" aria-label="서비스 신뢰 정보">
-            <GameIcon name="shield" size={18} />
-            <span>교육부 유치원알리미 공식 데이터</span>
-            <span aria-hidden="true">·</span>
-            <span>무료 이용</span>
-          </div>
-        </section>
-
-        <div className="hero-visual">
-          <div className="game-window">
-            <div className="game-window-bar" aria-hidden="true">
-              <span>우리 동네 탐험 지도</span>
-              <i /><i /><i />
+      <section className="forest-hero" aria-labelledby="home-title">
+        <Image
+          className="forest-hero-art"
+          src="/images/kindergarten-forest-field-v2.webp"
+          alt="울창한 숲길을 걷는 부모와 아이 탐험가가 있는 2D 횡스크롤 게임 풍경"
+          fill
+          priority
+          sizes="100vw"
+        />
+        <Container className="forest-hero-inner">
+          <div className="quest-dialog hero-copy">
+            <p className="hero-kicker"><GameIcon name="compass" size={18} /> 첫 번째 모험 의뢰</p>
+            <h1 id="home-title">
+              우리 동네 유치원,
+              <br />
+              <span>탐험 지도</span>에서 찾아보세요
+            </h1>
+            <p>
+              주소를 검색하면 가까운 유치원부터 보여드려요. 빈자리, 교사 수, 급식과
+              통학차량까지 한 화면에서 비교해 보세요.
+            </p>
+            <div className="hero-actions">
+              <Button href="/map"><GameIcon name="map" /> 지도 탐험 시작하기</Button>
+              <Button href="/blog" variant="secondary">
+                <GameIcon name="book" /> 부모 모험 가이드
+              </Button>
             </div>
-            <div className="hero-illustration">
-            <Image
-              src="/images/chibi-kindergarten-guide.webp"
-              alt="동네 지도를 든 치비 안내 캐릭터와 유치원, 통학버스 일러스트"
-              width={1200}
-              height={900}
-              priority
-              sizes="(max-width: 768px) calc(100vw - 40px), 520px"
-            />
-              <div className="scene-nameplate" aria-hidden="true">
-                <GameIcon name="pin" size={16} /> 햇살마을 유치원 앞
-              </div>
+            <div className="hero-trust" aria-label="서비스 신뢰 정보">
+              <GameIcon name="shield" size={18} />
+              <span>교육부 유치원알리미 공식 데이터 · 무료 이용</span>
             </div>
           </div>
-          <div className="hero-info-chip hero-info-chip-distance" aria-hidden="true">
-            <span>가까운 순</span>
-            <strong>320m</strong>
+          <div className="forest-mini-map" aria-hidden="true">
+            <span><GameIcon name="pin" size={15} /> 햇살숲길</span>
+            <strong>다음 목적지 320m</strong>
           </div>
-          <div className="hero-info-chip hero-info-chip-data" aria-hidden="true">
-            <span>공식 데이터</span>
-            <strong>한눈에 비교</strong>
-          </div>
-        </div>
-      </Container>
+          <div className="forest-nameplate" aria-hidden="true">유치원 탐험대</div>
+        </Container>
+      </section>
 
       <Container className="home-body">
         <section className="home-list-block quest-board" aria-labelledby="how-title">
