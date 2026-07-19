@@ -856,7 +856,7 @@ export default function MapPage() {
           <div className="map-container">
             <div ref={mapRef} className="map-canvas" />
             <div className="map-toast-wrap" role="status" aria-live="polite">{searchMsg && <div className="map-toast">{searchMsg}</div>}</div>
-            {!hasRegion && !loading && (<div className="map-hint">← 왼쪽에서 동네를 검색하거나 지역을 선택하세요</div>)}
+            {!hasRegion && !loading && (<div className="map-hint">동네를 검색하거나 지역을 선택하세요</div>)}
             {hasRegion && !loading && summary && (
               <div className="map-summary-overlay" role="status" aria-live="polite">
                 <strong className="map-summary-overlay-n">{summary.n}곳</strong>

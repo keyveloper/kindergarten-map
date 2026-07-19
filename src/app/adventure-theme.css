@@ -1682,3 +1682,132 @@ body::before {
     font-size: 12px;
   }
 }
+
+/* Map-only mobile layout: compact header, stable viewport, touch-sized controls. */
+@media (max-width: 560px) {
+  body:has(.map-page) .header-inner {
+    min-height: 64px;
+    flex-wrap: nowrap;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body:has(.map-page) .primary-nav {
+    width: auto;
+    flex-wrap: nowrap;
+    margin-left: auto;
+  }
+
+  body:has(.map-page) .primary-nav a {
+    width: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+  }
+
+  .map-page {
+    width: 100%;
+    height: calc(100dvh - 70px);
+  }
+
+  .map-toolbar,
+  .map-toolbar-inner {
+    min-width: 0;
+  }
+
+  .map-toolbar-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.8fr) minmax(0, 1.25fr);
+    gap: 8px;
+    min-height: 0;
+    padding: 8px 10px;
+  }
+
+  .map-search {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    order: initial;
+  }
+
+  .map-loc-btn,
+  .map-sort-select {
+    width: 100%;
+    min-width: 0;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .map-selectors {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .map-selectors .map-select {
+    width: 100%;
+    min-width: 0;
+    padding-left: 9px;
+  }
+
+  .map-filterbar {
+    gap: 8px;
+    padding: 8px 10px;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+  }
+
+  .map-filter-label,
+  .map-filter-div {
+    display: none;
+  }
+
+  .map-seg {
+    padding: 0;
+    scroll-snap-align: start;
+  }
+
+  .map-seg-btn,
+  .map-chip,
+  .map-select-sm,
+  .map-filter-reset {
+    height: 44px;
+  }
+
+  .map-seg-btn,
+  .map-chip {
+    padding: 0 13px;
+  }
+
+  .map-chip,
+  .map-select-sm {
+    scroll-snap-align: start;
+  }
+
+  .map-container {
+    height: min(45dvh, 420px);
+  }
+
+  .map-hint {
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: none;
+    padding: 10px 12px;
+    text-align: center;
+    white-space: normal;
+    transform: translateY(-50%);
+  }
+
+  .map-legend {
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    justify-content: center;
+  }
+
+  .map-panel-onboard {
+    margin: 0;
+    padding: 32px 20px;
+  }
+}
