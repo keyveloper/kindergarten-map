@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { BlogPost } from '@/data/posts';
+import { GameIcon } from '@/components/ui/GameIcon';
 
 interface ArticleCardProps {
   post: BlogPost;
@@ -21,7 +22,7 @@ export function ArticleCard({ post, featured = false }: ArticleCardProps) {
       </Link>
       <div className="article-card-content">
         <div className="article-card-badges">
-          {featured ? <span className="article-recommend-badge">추천</span> : null}
+          {featured ? <span className="article-recommend-badge"><GameIcon name="sparkle" size={14} /> 이번 주 추천</span> : null}
           <span className="article-category-badge">{post.category}</span>
         </div>
         <h3>
@@ -34,7 +35,7 @@ export function ArticleCard({ post, featured = false }: ArticleCardProps) {
             <span>{post.readingMinutes}분 읽기</span>
           </div>
           <Link className="text-link" href={`/blog/${post.slug}`} aria-label={`${post.title} 읽기`}>
-            읽어보기
+            기록 펼치기
           </Link>
         </div>
       </div>

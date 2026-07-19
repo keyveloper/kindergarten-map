@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
+import { GameIcon } from '@/components/ui/GameIcon';
 
 export const metadata: Metadata = {
   title: '우리 동네 유치원 지도 - 주변 유치원 찾고 나란히 비교',
@@ -15,12 +16,13 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="home">
-      <Container className="hero-grid">
+      <Container className="hero-grid home-hero">
         <section className="hero-copy" aria-labelledby="home-title">
+          <p className="hero-kicker"><GameIcon name="compass" size={18} /> 우리 아이 첫 모험을 위한 안내소</p>
           <h1 id="home-title">
             우리 동네 유치원,
             <br />
-            지도에서 찾고 나란히 비교하세요
+            <span>탐험 지도</span>에서 찾아보세요
           </h1>
           <p>
             동네 이름이나 주소를 검색하면 주변 유치원을 거리순으로 보여드립니다. 교사
@@ -28,18 +30,26 @@ export default function HomePage() {
             놓고 비교해 우리 아이에게 맞는 곳을 고르세요.
           </p>
           <div className="hero-actions">
-            <Button href="/map">지도에서 유치원 찾기</Button>
+            <Button href="/map"><GameIcon name="map" /> 지도 탐험 시작하기</Button>
             <Button href="/blog" variant="secondary">
-              유치원 고르기 가이드
+              <GameIcon name="book" /> 부모 모험 가이드
             </Button>
           </div>
-          <p className="hero-trust">
-            교육부 유치원알리미 공식 데이터로 만들었고, 이용료는 없습니다.
-          </p>
+          <div className="hero-trust" aria-label="서비스 신뢰 정보">
+            <GameIcon name="shield" size={18} />
+            <span>교육부 유치원알리미 공식 데이터</span>
+            <span aria-hidden="true">·</span>
+            <span>무료 이용</span>
+          </div>
         </section>
 
         <div className="hero-visual">
-          <div className="hero-illustration">
+          <div className="game-window">
+            <div className="game-window-bar" aria-hidden="true">
+              <span>우리 동네 탐험 지도</span>
+              <i /><i /><i />
+            </div>
+            <div className="hero-illustration">
             <Image
               src="/images/chibi-kindergarten-guide.webp"
               alt="동네 지도를 든 치비 안내 캐릭터와 유치원, 통학버스 일러스트"
@@ -48,6 +58,10 @@ export default function HomePage() {
               priority
               sizes="(max-width: 768px) calc(100vw - 40px), 520px"
             />
+              <div className="scene-nameplate" aria-hidden="true">
+                <GameIcon name="pin" size={16} /> 햇살마을 유치원 앞
+              </div>
+            </div>
           </div>
           <div className="hero-info-chip hero-info-chip-distance" aria-hidden="true">
             <span>가까운 순</span>
@@ -61,25 +75,31 @@ export default function HomePage() {
       </Container>
 
       <Container className="home-body">
-        <section className="home-list-block" aria-labelledby="how-title">
-          <h2 id="how-title">지도에서 이렇게 비교합니다</h2>
+        <section className="home-list-block quest-board" aria-labelledby="how-title">
+          <div className="section-title-row">
+            <span className="section-medallion"><GameIcon name="scroll" /></span>
+            <div>
+              <p className="section-kicker">탐험 순서</p>
+              <h2 id="how-title">세 단계면 후보가 선명해져요</h2>
+            </div>
+          </div>
           <dl className="home-list">
             <div className="home-list-item">
-              <dt>거리순으로 정렬</dt>
+              <dt><span>1</span> 출발지를 정해요</dt>
               <dd>
                 내 위치를 누르거나 동네·주소·건물명을 검색하면 가까운 유치원부터
                 차례로 보여드립니다.
               </dd>
             </div>
             <div className="home-list-item">
-              <dt>같은 기준으로 나란히</dt>
+              <dt><span>2</span> 후보를 지도에 담아요</dt>
               <dd>
                 마음에 드는 곳을 담아 교사 1인당 원아 수, 급식 운영, 통학차량,
                 방과후 과정을 한 화면에서 비교합니다.
               </dd>
             </div>
             <div className="home-list-item">
-              <dt>우리 아이 나이에 맞춰</dt>
+              <dt><span>3</span> 조건을 나란히 봐요</dt>
               <dd>
                 아이 나이로 결과를 걸러 그 연령의 반과 남은 자리를 확인하고 맞는
                 곳을 고릅니다.
@@ -88,8 +108,14 @@ export default function HomePage() {
           </dl>
         </section>
 
-        <section className="home-trust" aria-labelledby="trust-title">
-          <h2 id="trust-title">홍보 없이, 공식 데이터로만</h2>
+        <section className="home-trust field-guide" aria-labelledby="trust-title">
+          <div className="section-title-row">
+            <span className="section-medallion section-medallion-blue"><GameIcon name="shield" /></span>
+            <div>
+              <p className="section-kicker">정보 도감</p>
+              <h2 id="trust-title">홍보 없이, 공식 데이터로만</h2>
+            </div>
+          </div>
           <p>
             모든 유치원을 교육부 유치원알리미 공식 데이터로 같은 기준에 놓고
             보여드립니다. 특정 기관을 위에 올리거나 광고로 끼워 넣지 않습니다. 지금은
@@ -98,14 +124,20 @@ export default function HomePage() {
           </p>
         </section>
 
-        <section className="home-blog" aria-labelledby="blog-title">
-          <h2 id="blog-title">유치원 고르기 전에 읽어두면 좋은 글</h2>
+        <section className="home-blog adventure-note" aria-labelledby="blog-title">
+          <div className="section-title-row">
+            <span className="section-medallion section-medallion-coral"><GameIcon name="book" /></span>
+            <div>
+              <p className="section-kicker">부모의 모험 노트</p>
+              <h2 id="blog-title">유치원 고르기 전에 읽어두면 좋은 글</h2>
+            </div>
+          </div>
           <p>
             상담에서 물어볼 것, 국공립과 사립의 차이, 통학 거리를 판단하는 법, 아이
             성향별로 보는 기준을 정리했습니다.
           </p>
           <Button href="/blog" variant="secondary">
-            블로그 글 보기
+            <GameIcon name="book" /> 가이드 모아보기
           </Button>
         </section>
       </Container>

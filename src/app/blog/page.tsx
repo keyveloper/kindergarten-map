@@ -3,6 +3,7 @@ import { ArticleCard } from '@/components/blog/ArticleCard';
 import { Container } from '@/components/ui/Container';
 import { publishedPosts as blogPosts } from '@/data/posts';
 import { siteConfig } from '@/lib/site';
+import { GameIcon } from '@/components/ui/GameIcon';
 
 export const metadata: Metadata = {
   title: '블로그',
@@ -56,8 +57,9 @@ export default function BlogPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <div className="blog-page-heading">
-          <p className="eyebrow">Parent guide</p>
-          <h1>부모를 위한 유치원 가이드</h1>
+          <span className="page-emblem"><GameIcon name="book" size={28} /></span>
+          <p className="eyebrow">부모의 모험 노트</p>
+          <h1>유치원 선택 퀘스트 보드</h1>
           <p>
             복잡한 유치원 선택 앞에서 조금 덜 막막하도록, 상담 질문부터 입학 준비와
             통학 기준까지 실제로 확인할 내용을 차근차근 정리했습니다.
@@ -68,8 +70,8 @@ export default function BlogPage() {
         </section>
         <div className="article-section-heading">
           <div>
-            <p className="eyebrow">Latest stories</p>
-            <h2>최근에 올라온 글</h2>
+            <p className="eyebrow">새로운 기록</p>
+            <h2>최근 가이드</h2>
           </div>
           <p>유치원 선택과 입학 준비에 필요한 내용을 주제별로 살펴보세요.</p>
         </div>

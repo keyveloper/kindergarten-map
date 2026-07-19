@@ -689,6 +689,10 @@ export default function MapPage() {
         {/* ===== Toolbar ===== */}
         <div className="map-toolbar">
           <div className="map-toolbar-inner">
+            <div className="map-toolbar-title" aria-hidden="true">
+              <span>유치원 탐험 지도</span>
+              <strong>동네 찾기</strong>
+            </div>
             <form className="map-search" onSubmit={handleSearch} role="search">
               <svg className="map-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
               <input
@@ -771,7 +775,8 @@ export default function MapPage() {
             {!hasRegion ? (
               <div className="map-panel-onboard">
                 <svg className="map-onboard-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1f6f6b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                <h2 className="map-onboard-title">우리 동네 유치원을<br />한눈에 비교해 보세요</h2>
+                <p className="map-onboard-kicker">첫 번째 퀘스트</p>
+                <h2 className="map-onboard-title">우리 동네에서<br />유치원을 발견해 보세요</h2>
                 <p className="map-onboard-desc">동네 이름이나 주소를 검색하거나 <strong>내 위치</strong>를 누르면<br />주변 유치원을 거리순으로 보여드려요.</p>
                 <ul className="map-onboard-points">
                   <li><IconBus size={16} /> 통학차량 · 방과후 운영 여부</li>
@@ -794,7 +799,7 @@ export default function MapPage() {
               <div className="map-list">
                 <div className="map-list-head">
                   <span className="map-list-count" role="status" aria-live="polite">
-                    유치원 <strong>{display.length}</strong>곳
+                    발견한 유치원 <strong>{display.length}</strong>곳
                     {display.length !== kindergartens.length && (<span className="map-list-total"> (전체 {kindergartens.length}곳)</span>)}
                   </span>
                 </div>
@@ -892,7 +897,7 @@ export default function MapPage() {
           {compareList.length > 0 && !showCompare && (
             <div className="map-cmp-bar">
               <div className="map-cmp-bar-items">
-                <span className="map-cmp-bar-label">비교 담기</span>
+                <span className="map-cmp-bar-label">비교 가방</span>
                 {compareList.map((k) => (
                   <span key={k.kindercode} className="map-cmp-tag">
                     {k.name}
@@ -915,88 +920,6 @@ export default function MapPage() {
         )}
       </main>
 
-      <style jsx global>{`
-        /* 내 위치 FAB — 지도 우하단 (카카오/네이버/구글 공통 위치) */
-        .km-fab {
-          position: absolute;
-          right: 14px;
-          bottom: 104px;
-          z-index: 5;
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: #fff;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          color: #5f6368;
-          cursor: pointer;
-          transition: background 150ms ease, color 150ms ease;
-        }
-        .km-fab:hover {
-          background: #f5f5f5;
-          color: #1f6f6b;
-        }
-        .km-fab:disabled {
-          cursor: default;
-        }
-        .km-fab-spin {
-          width: 20px;
-          height: 20px;
-          border: 2.5px solid rgba(31, 111, 107, 0.25);
-          border-top-color: #1f6f6b;
-          border-radius: 50%;
-          animation: km-spin 0.7s linear infinite;
-        }
-        @keyframes km-spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        /* 현재 위치 파란 점 + 맥동 */
-        .km-gps {
-          position: relative;
-          width: 18px;
-          height: 18px;
-        }
-        .km-gps-dot,
-        .km-gps-pulse {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .km-gps-dot {
-          background: #4285f4;
-          border: 3px solid #fff;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-        }
-        .km-gps-pulse {
-          background: #4285f4;
-          opacity: 0.5;
-          animation: km-gps-pulse 1.8s ease-out infinite;
-        }
-        @keyframes km-gps-pulse {
-          0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 0.5;
-          }
-          100% {
-            transform: translate(-50%, -50%) scale(2.6);
-            opacity: 0;
-          }
-        }
-        @media (max-width: 768px) {
-          .km-fab {
-            bottom: 120px;
-          }
-        }
-      `}</style>
     </>
   );
 }

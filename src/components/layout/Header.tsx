@@ -2,6 +2,13 @@ import Link from 'next/link';
 import { BrandMark } from '@/components/brand/BrandMark';
 import { siteConfig } from '@/lib/site';
 import { Container } from '@/components/ui/Container';
+import { GameIcon, GameIconName } from '@/components/ui/GameIcon';
+
+const navigationIcons: Record<string, GameIconName> = {
+  '/': 'home',
+  '/map': 'map',
+  '/blog': 'book',
+};
 
 export function Header() {
   return (
@@ -14,6 +21,7 @@ export function Header() {
         <nav className="primary-nav" aria-label="주요 메뉴">
           {siteConfig.navigation.map((item) => (
             <Link key={item.href} href={item.href}>
+              <GameIcon name={navigationIcons[item.href]} size={17} />
               {item.label}
             </Link>
           ))}

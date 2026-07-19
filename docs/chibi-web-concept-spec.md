@@ -4,22 +4,22 @@
 
 우리동네 유치원 웹사이트의 다음 시각 개편 또는 신규 페이지 제작 시, 치비 스타일을 단순 장식이 아니라 부모가 편하게 읽고 탐색할 수 있는 UX 언어로 적용한다.
 
-핵심 방향은 "밝고 귀엽지만, 정보는 믿을 수 있게"이다. 치비 캐릭터와 둥근 일러스트는 첫인상과 안내감을 만들고, 유치원 정보/지도/블로그 콘텐츠는 가독성과 탐색성을 우선한다.
+핵심 방향은 "밝고 귀엽지만, 정보는 믿을 수 있게"이다. 이번 개편부터는 일반적인 치비 랜딩보다 **오리지널 2D 판타지 모험 게임의 마을·지도·퀘스트 보드·도감** 문법을 사용한다. 특정 게임의 캐릭터, 로고, 맵, UI 자산을 따라 하지 않고 정서와 화면 문법만 가져온다.
 
 ## Concept
 
-- Style: chibi, playful, parent-friendly, kindergarten, soft editorial
+- Style: chibi, storybook RPG, playful, parent-friendly, kindergarten, soft editorial
 - Mood: warm, safe, cheerful, helpful, approachable
 - Product role: 유치원 정보 탐색 + 부모 대상 블로그 콘텐츠
-- Visual principle: 캐릭터는 보조 안내자, 정보 콘텐츠는 주인공
+- Visual principle: 캐릭터와 게임 장치는 길잡이, 정보 콘텐츠는 주인공
 - UX principle: 귀여움보다 명확성, 장식보다 탐색 성공
 
 ## Visual Direction
 
 - 캐릭터 비율은 큰 머리, 작은 몸, 둥근 손/발, 단순 표정으로 유지한다.
-- 캐릭터는 hero, empty state, onboarding hint, section marker, blog category thumbnail에 제한적으로 사용한다.
+- 캐릭터는 hero, empty state, onboarding hint, section marker에 제한적으로 사용한다. 블로그 이미지는 사진처럼 보이게 다듬기보다 '모험 기록 장면'처럼 프레임과 캡션을 붙인다.
 - 정보 카드, 지도, 글 목록, CTA는 과도한 일러스트보다 읽기 쉬운 구조를 우선한다.
-- 둥근 형태를 쓰되 모든 요소가 과하게 말랑해 보이지 않도록 8px 기준의 카드 radius를 기본으로 한다.
+- 모든 요소를 같은 둥근 카드로 만들지 않는다. 종이 패널, 나무 표지판, 지도 창, 도감 페이지처럼 역할에 맞는 실루엣을 나눈다.
 - 배경은 밝은 종이 느낌 또는 부드러운 pastel surface를 사용하고, 본문 대비는 WCAG AA 이상을 목표로 한다.
 - 아이콘은 emoji 대신 Lucide 또는 일관된 SVG 아이콘을 사용한다.
 
@@ -96,6 +96,10 @@
 - map/search usability first
 - blog readability first
 - SVG icons instead of emoji
+- original 2D fantasy village, no copied game assets
+- quest board information architecture
+- field guide article layout
+- map as the adventure world screen
 
 ## Page-Level Usage
 
@@ -115,7 +119,8 @@
 - 모든 카드/섹션을 과하게 둥글고 큰 장식 박스로 만드는 방식
 - 무한 bounce, 과한 parallax, 500ms 이상의 느린 UI 애니메이션
 - 모바일에서 긴 제목/버튼 텍스트가 깨지는 구성
-- 유치원 정보 사이트가 게임/캐릭터 랜딩처럼 보이는 톤
+- 실제 게임을 흉내 내느라 유치원 정보와 CTA를 찾기 어려운 톤
+- 보라색-파란색 그라디언트, 글래스 카드, 이유 없는 부유 도형처럼 흔한 AI 랜딩 패턴
 
 ## Acceptance Checklist
 

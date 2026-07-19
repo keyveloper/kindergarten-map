@@ -21,6 +21,7 @@ export function Footer() {
           <p>
             동네 유치원을 지도에서 찾아 나란히 비교하고, 우리 아이에게 맞는 곳을 고르도록 돕습니다.
           </p>
+          <p className="footer-data-note">교육부 유치원알리미 공식 데이터 기반</p>
         </div>
         <nav aria-label="하단 메뉴">
           <Link href="/">홈</Link>

@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { Container } from '@/components/ui/Container';
 import { BlogContentBlock, publishedPosts as blogPosts } from '@/data/posts';
 import { siteConfig } from '@/lib/site';
+import { GameIcon } from '@/components/ui/GameIcon';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -129,7 +130,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         />
         <section className="post-hero">
           <Container className="post-hero-inner">
-            <p className="post-breadcrumb">홈 &gt; 블로그 &gt; {post.category}</p>
+            <p className="post-breadcrumb"><GameIcon name="book" size={16} /> 부모의 모험 노트 · {post.category}</p>
             <h1>{post.title}</h1>
             <p className="post-description">{post.description}</p>
             <div className="post-meta-line">
@@ -142,7 +143,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <Container className="post-container">
           <div className="post-article">
             <section className="post-summary-card" aria-labelledby="summary-title">
-              <h2 id="summary-title">먼저 볼 핵심 3가지</h2>
+              <h2 id="summary-title"><GameIcon name="scroll" /> 이 글의 퀘스트 목표</h2>
               {post.summary.map((item) => (
                 <p key={item}>{item}</p>
               ))}
@@ -152,7 +153,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               slug={post.slug}
               index={1}
               alt={`${post.title}의 핵심 내용을 설명하는 치비 일러스트`}
-              caption="글의 핵심 상황을 부모와 아이의 하루 장면으로 정리했습니다."
+              caption="모험 기록 01 · 부모와 아이의 하루에서 먼저 살펴볼 장면"
               priority
             />
 
@@ -163,7 +164,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     slug={post.slug}
                     index={2}
                     alt={`${post.title}의 선택 기준을 보여주는 치비 일러스트`}
-                    caption="조건을 하나씩 비교하면 우리 가족에게 맞는 선택이 더 선명해집니다."
+                    caption="모험 기록 02 · 조건을 하나씩 비교해 선택을 좁히는 장면"
                   />
                 ) : null}
                 {renderContentBlock(block, index)}
@@ -177,7 +178,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </section>
 
             <section className="post-related">
-              <h2>더 알아보면 좋은 글</h2>
+              <h2><GameIcon name="compass" /> 다음으로 살펴볼 가이드</h2>
               {relatedPosts.map((relatedPost) => (
                 <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
                   {relatedPost.title}
