@@ -19,14 +19,14 @@ export const metadata: Metadata = {
       '유치원 선택과 입학 준비에 필요한 상담 질문, 생활 습관, 통학 거리 정보를 한곳에 모았습니다.',
     url: `${siteConfig.url}/blog`,
     type: 'website',
-    images: ['/images/chibi-kindergarten-guide.webp'],
+    images: ['/images/posts/kindergarten-teacher-student-ratio-guide-1.webp'],
   },
   twitter: {
     card: 'summary_large_image',
     title: `블로그 | ${siteConfig.name}`,
     description:
       '유치원 선택과 입학 준비에 필요한 상담 질문, 생활 습관, 통학 거리 정보를 한곳에 모았습니다.',
-    images: ['/images/chibi-kindergarten-guide.webp'],
+    images: ['/images/posts/kindergarten-teacher-student-ratio-guide-1.webp'],
   },
 };
 
@@ -58,8 +58,8 @@ export default function BlogPage() {
         />
         <div className="blog-page-heading">
           <span className="page-emblem"><GameIcon name="book" size={28} /></span>
-          <p className="eyebrow">부모의 모험 노트</p>
-          <h1>유치원 선택 퀘스트 보드</h1>
+          <p className="eyebrow">유치원 선택 가이드</p>
+          <h1>부모를 위한 유치원 정보</h1>
           <p>
             복잡한 유치원 선택 앞에서 조금 덜 막막하도록, 상담 질문부터 입학 준비와
             통학 기준까지 실제로 확인할 내용을 차근차근 정리했습니다.

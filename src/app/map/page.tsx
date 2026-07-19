@@ -690,7 +690,7 @@ export default function MapPage() {
         <div className="map-toolbar">
           <div className="map-toolbar-inner">
             <div className="map-toolbar-title" aria-hidden="true">
-              <span>유치원 탐험 지도</span>
+              <span>유치원 지도</span>
               <strong>동네 찾기</strong>
             </div>
             <form className="map-search" onSubmit={handleSearch} role="search">
@@ -775,8 +775,8 @@ export default function MapPage() {
             {!hasRegion ? (
               <div className="map-panel-onboard">
                 <svg className="map-onboard-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1f6f6b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                <p className="map-onboard-kicker">첫 번째 퀘스트</p>
-                <h2 className="map-onboard-title">우리 동네에서<br />유치원을 발견해 보세요</h2>
+                <p className="map-onboard-kicker">시작하기</p>
+                <h2 className="map-onboard-title">우리 동네에서<br />유치원을 찾아보세요</h2>
                 <p className="map-onboard-desc">동네 이름이나 주소를 검색하거나 <strong>내 위치</strong>를 누르면<br />주변 유치원을 거리순으로 보여드려요.</p>
                 <ul className="map-onboard-points">
                   <li><IconBus size={16} /> 통학차량 · 방과후 운영 여부</li>
@@ -799,7 +799,7 @@ export default function MapPage() {
               <div className="map-list">
                 <div className="map-list-head">
                   <span className="map-list-count" role="status" aria-live="polite">
-                    발견한 유치원 <strong>{display.length}</strong>곳
+                    검색 결과 <strong>{display.length}</strong>곳
                     {display.length !== kindergartens.length && (<span className="map-list-total"> (전체 {kindergartens.length}곳)</span>)}
                   </span>
                 </div>
@@ -897,7 +897,7 @@ export default function MapPage() {
           {compareList.length > 0 && !showCompare && (
             <div className="map-cmp-bar">
               <div className="map-cmp-bar-items">
-                <span className="map-cmp-bar-label">비교 가방</span>
+                <span className="map-cmp-bar-label">비교 목록</span>
                 {compareList.map((k) => (
                   <span key={k.kindercode} className="map-cmp-tag">
                     {k.name}
