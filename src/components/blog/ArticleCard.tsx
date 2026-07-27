@@ -17,6 +17,7 @@ export function ArticleCard({ post, featured = false }: ArticleCardProps) {
           alt=""
           width={1200}
           height={800}
+          priority={featured}
           sizes={featured ? '(max-width: 860px) 100vw, 540px' : '(max-width: 560px) 100vw, (max-width: 960px) 50vw, 360px'}
         />
       </Link>

@@ -1788,6 +1788,12 @@ body::before {
     order: initial;
   }
 
+  .map-search-btn {
+    right: 0;
+    height: 44px;
+    border-radius: 0 7px 7px 0;
+  }
+
   .map-loc-btn,
   .map-sort-select {
     width: 100%;
@@ -1832,6 +1838,13 @@ body::before {
   .map-select-sm,
   .map-filter-reset {
     height: 44px;
+  }
+
+  .map-select-sm,
+  .map-preset-select {
+    width: 128px;
+    min-width: 128px;
+    flex: 0 0 128px;
   }
 
   .map-seg-btn,
